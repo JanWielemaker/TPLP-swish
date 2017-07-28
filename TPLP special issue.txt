@@ -1,0 +1,50 @@
+Special Issue of Theory and Practice of Logic Programming
+-- User-Oriented Logic Programming and Reasoning Paradigms --
+
+Since the emergence of logic reasoning paradigms, such as answer set
+programming, constraint logic programming, probabilistic logic programming,
+abductive logic programming, inductive logic programming, and argumentation,
+much theoretical work has been done, for example concerning different semantics
+and their properties.
+More recently, implementations and IDEs emerged which have proven useful in
+various problem-solving applications.
+However, user-friendliness is still an issue, both for users who are logic
+programming experts and non-expert users who simply apply logic paradigms in
+problem-solving applications; for example, experts benefit from features like
+debugging and heuristic tuning, non-experts from educational material,
+explanations, and intuitive visualisations - all of which are ongoing topics of
+research.
+
+The goal of this special issue is to discuss different aspects involved in
+making logic reasoning paradigms more user-friendly:
+1. Describe cutting-edge developments (e.g., novel IDEs, debugging techniques,
+visualisations, or methods for heuristic tuning) of both practical and/or
+theoretical nature;
+2. Provide well-thought assessments of the state of the art (e.g., in the form
+of well-organised surveys or personal perspectives);
+3. Describe new research directions, offering clear motivations, new
+perspectives, and solid foundations for other researchers to build upon
+(e.g. best practice or logic programming education)
+
+
+SUBMISSION DEADLINES:
+* Notes of Interest: June 30th 2017
+* Title and Abstract: July 28th, 2017
+* Full Paper: September 29th, 2017
+
+
+SUBMISSION INSTRUCTIONS:
+Please submit notes of interest and title/abstract to
+schulz@ukp.informatik.tu-darmstadt.de and 
+ellmauthaler@informatik.uni-leipzig.de 
+
+Submissions of manuscripts must be made in the TPLP format:
+  http://www.cambridge.org/core/services/aop-file-manager/file/57597b8c6b444096594ef4c7
+  
+and handled through the TPLP Submission site:
+  https://mc.manuscriptcentral.com/tplp
+
+
+GUEST EDITORS:
+* Claudia Schulz, schulz@ukp.informatik.tu-darmstadt.de, UKP Lab, TU Darmstadt, Germany
+* Stefan Ellmauthaler, ellmauthaler@informatik.uni-leipzig.de, Leipzig University, Germany
