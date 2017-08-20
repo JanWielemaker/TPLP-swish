@@ -1,0 +1,5 @@
+\section{Extending SWISH}
+\label{sec:extending}
+
+\input{cplint.tex}
+\input{lps.tex}

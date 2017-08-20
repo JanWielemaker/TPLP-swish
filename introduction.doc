@@ -37,9 +37,30 @@ notebooks} was introduced in 1988 as Mathematica 1.0 on the
 Macintosh\footnote{\url{https://en.wikipedia.org/wiki/Notebook_interface}}.
 Modern web technology such as HTML5, CSS3 and JavaScript allow for web
 based versions of notebooks, simplifying their deployment. A good
-example of this is Jupyter.
+example of this is Jupyter. The notebook interface paradigm is claimed
+\TODO{ref} to be particularly suited to improve reproducibility in e.g.,
+data science workflows and to provide interactive educational material.
+
+In this article we are interested in the educational opportunities
+provided by notebook interfaces and we concentrate on Prolog and Prolog
+based languages. Prolog has a number of distinctive features that are
+hard to support in systems that are designed for more widespread
+languages. First, the program-is-data feature, combined with the absense
+of keywords complicates syntax highlighting, completion and other user
+support found in modern editors and expected by todays users. Second,
+non-determinism allows generating multiple answers for one query, which
+requires a different query/answer interface. Third, a large subset of
+queries is side effect free. This simplifies concurrent usage through a
+web based interface.
 
 This article discusses SWISH, an acronym for \jargon{SWI}-Prolog for
 \jargon{SH}aring or \jargon{SWI}-Prolog \jargon{SH}ell. SWISH consists
 of a web server written in SWI-Prolog and a client application written
-in JavaScript. In this sense the design is similar to Jupyter.
+in JavaScript. In this sense the design is similar to Jupyter.  SWISH
+however is designed as a multi-user notebook that supports Prolog's
+distinctive features and can be extended to facilitate extensions of
+the Prolog language such as CHR, cplint and LPS.
+
+This article describes the architecture of SWISH, how it is being
+deployed to support Prolog education and how it has been extended to
+support cplint and LPS.
