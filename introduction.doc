@@ -1,0 +1,66 @@
+\section{Introduction}
+\label{sec:intro}
+
+Interactive languages such as Prolog traditionally provide a
+\jargon{console} to which you type commands (queries) and where the
+output (answers) appear in textual form. The programming environment
+consists of this interactive session, a code editor and optionally tools
+such as cross-referencing, profiling, testing, etc. These may be
+integrated in a single frontend called an \jargon{Integrated Development
+Environment} (IDE) such as, e.g., Emacs, Eclipse or Visual Studio.
+
+\jargon{Literate programming} combines text about a program with the
+program itself in a single document. This field was pioneered by Knuth
+\cite{knuth}, who created high quality documentation and a Pascal
+program for \TeX{} from a single document using \program{tangle} and
+\program{weave}. Note that in Knuth's vision the text was more design
+documentation than merely simple comments. For program development
+purposes literate programming evolved into generating program
+documentation from source code based on properties from the code itself
+such as class names or function names and \jargon{structured comments}.
+The structured comments use the comment syntax of the target language,
+avoiding the need for \program{tangle} to extract the program from the
+document. A \program{weave} like program is used to recognise, for
+example, comments starting with \verb$/**$ rather than plain \verb$/*$
+and process the result using a markup language such as HTML, \LaTeX{} or
+markdown. Well known examples of this class are JavaDoc and Doxygen.
+
+Notably for domains were programs are used to perform calculations on
+raw (experimental) data and produce derived data and charts the
+traditional literate programming approach has been extended to include
+the result of the program such as a table or chart into the document.
+A \LaTeX{} based approach for this is \TODO{find ref}.
+
+The first interactive version of this approach, called \jargon{notebooks
+interfaces}, \jargon{computational notebooks} or \jargon{data science
+notebooks} was introduced in 1988 as Mathematica 1.0 on the
+Macintosh\footnote{\url{https://en.wikipedia.org/wiki/Notebook_interface}}.
+Modern web technology such as HTML5, CSS3 and JavaScript allow for web
+based versions of notebooks, simplifying their deployment. A good
+example of this is Jupyter. The notebook interface paradigm is claimed
+\TODO{ref} to be particularly suited to improve reproducibility in e.g.,
+data science workflows and to provide interactive educational material.
+
+In this article we are interested in the educational opportunities
+provided by notebook interfaces and we concentrate on Prolog and Prolog
+based languages. Prolog has a number of distinctive features that are
+hard to support in systems that are designed for more widespread
+languages. First, the program-is-data feature, combined with the absense
+of keywords complicates syntax highlighting, completion and other user
+support found in modern editors and expected by todays users. Second,
+non-determinism allows generating multiple answers for one query, which
+requires a different query/answer interface. Third, a large subset of
+queries is side effect free. This simplifies concurrent usage through a
+web based interface.
+
+This article discusses SWISH, an acronym for \jargon{SWI}-Prolog for
+\jargon{SH}aring or \jargon{SWI}-Prolog \jargon{SH}ell. SWISH consists
+of a web server written in SWI-Prolog and a client application written
+in JavaScript. In this sense the design is similar to Jupyter.  SWISH
+however is designed as a multi-user notebook that supports Prolog's
+distinctive features and can be extended to facilitate extensions of
+the Prolog language such as CHR, cplint and LPS.
+
+This article describes the architecture of SWISH, how it is being
+deployed to support Prolog education and how it has been extended to
+support cplint and LPS.

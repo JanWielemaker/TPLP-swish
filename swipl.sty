@@ -1,0 +1,97 @@
+\newcommand{\objectname}[1]{\mbox{@#1}}
+\newcommand{\predicate}[3]{
+	\ifthenelse{\equal{#2}{0}}{%
+	    \item[#1]}{%
+	    \item[#1({\it #3})]}%
+	\mbox{}\hfill\\}
+\newcommand{\predref}[2]{{\bf #1/#2}}
+\def\postscriptfig{\@ifnextchar[{\@scaledpostscriptfig}{\@postscriptfig}}
+\def\@scaledpostscriptfig[#1]#2#3{%
+	\begin{figure}[t]%
+	    \centerline{\includegraphics[#1]{#2}}
+	    \caption{#3}
+	    \label{fig:#2}
+	\end{figure}}
+\def\@postscriptfig#1#2{%
+	\begin{figure}[t]%
+	    \centerline{\includegraphics{#1}}
+	    \caption{#2}
+	    \label{fig:#1}
+	\end{figure}}
+\newcommand{\secref}[1]{section~\ref{sec:#1}}
+\newcommand{\tabref}[1]{table~\ref{tab:#1}}
+\newcommand{\figref}[1]{figure~\ref{fig:#1}}
+\newcommand{\Figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\Secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\Tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\var}[1]{{\it #1}}
+\newcommand{\class}[1]{{\bf #1}}
+\newcommand{\file}[1]{\texttt{#1}}
+\newcommand{\type}[1]{{\it #1}}
+\newcommand{\program}[1]{{\sf #1}}
+\newcommand{\ctype}[1]{{\it #1}}
+\newcommand{\const}[1]{\texttt{#1}}
+\newcommand{\reffont}{\bf}
+\newcommand{\jargon}[1]{\emph{#1}}
+\newcommand{\urlref}[1]{\footnote{\url{#1}}}
+\def\term{}
+\renewcommand{\term}[2]{\mbox{%
+	\ifthenelse{\equal{\protect}{\protect#2}}{%
+	    {\reffont #1}}{%
+	    {\reffont #1}({\it #2})}}}
+\newcommand{\infixterm}[3]{{\it #2} #1 {\it #2}}
+\newcommand{\defitem}[1]{%
+	\item[\mbox{#1}]\hfill\mbox{}\linebreak}
+\newcommand{\termitem}[2]{%
+	\ifthenelse{\equal{}{#2}}{%
+	    \defitem{#1}}{%
+	    \defitem{#1({\it #2})}}\ignorespaces}
+\newcommand{\bsl}{{\tt\string\ }}
+\catcode`\^^A=8% downarrow are for subscripts
+\catcode`\_=\active
+\def_{\ifmmode\else\_\fi}
+\renewcommand{\arg}[1]{\ifmmode\mbox{\em #1}\else{\em #1}\fi}
+\newcommand{\litem}[1]{\item \textit{#1}\hfill\\}
+\newenvironment{shortlist}{%
+	\begin{itemize}\setlength{\itemsep}{0pt}}{%
+	\end{itemize}}
+\newcommand{\funcref}[2]{%		% function(Args...)
+	\mbox{{\reffont #1(}{\it #2}{\reffont )}}}
+\makeatother
+
+% BNF
+
+\newcommand{\bnfmeta}[1]{\ifmmode{\langle\mbox{\it #1}\rangle}\else$\langle\mbox{\it #1}\rangle$\fi}
+\newcommand{\bnfor}{\ifmmode\mid\else$\mid$\fi}
+\newcommand{\isa}{& ::= &}
+\newcommand{\ora}{& $\mid$ &}
+
+\usepackage{fancyvrb}
+\usepackage{color}
+
+%\renewcommand{\FancyVerbFormatLine}[1]{%
+%	\ifthenelse{\equal{#1}{}}{%
+%	    empty}{%
+%	    #1}}
+
+\definecolor{codeboxcolor}{rgb}{0.4,0.4,0.4}
+\DefineVerbatimEnvironment%
+  {code}{Verbatim}
+  {fontsize=\footnotesize,
+   frame=single,
+   framerule=0.2pt,
+   rulecolor=\color{codeboxcolor},
+  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Todo, etc.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{tbd}{%
+	\hrule\vspace{0.5ex}%
+	\begin{description}\item[\textit{[TBD]}]%
+	}{%
+	\end{description}\vskip-\topsep\hrule\vspace{\topsep}%
+	}
+
+\newcommand{\todo}[1]{\textbf{[TBD:} #1]}

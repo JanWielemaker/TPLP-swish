@@ -1,0 +1,91 @@
+% TLP2esam.tex / sample pages for TLP
+% v2.11, released 6-nov-2002
+
+\documentclass{tlp}
+\usepackage{ifthen}
+\usepackage{url}
+% Remove hyperref for final version!!
+% \usepackage[pdftex,colorlinks=false,urlcolor=blue]{hyperref}
+\usepackage{swipl}
+\usepackage{amssymb}
+\usepackage{color}
+\newcommand{\authornote}[3]{{\color{#2} {\sc #1}: #3}}
+\newcommand\jan[1]{\authornote{jan}{red}{#1}}
+\newcommand\TODO[1]{\authornote{TODO}{red}{#1}}
+
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\graphicspath{{figs/}{./}}
+\newcommand{\tag}[1]{\texttt{#1}}
+\newcommand{\fnurl}[1]{\footnote{\url{#1}}}
+\sloppy
+
+\begin{document}
+\bibliographystyle{acmtrans}
+
+\title{Using SWISH to realise an interactive web based
+       tutorial for logic based languages}
+
+\author[J. Wielemaker et al.]
+{JAN WIELEMAKER \\
+VU University Amsterdam\\
+\email{J.Wielemaker@cs.vu.nl}
+\and
+RIGUZZI FABRIZIO \\
+\email{Fabrizio.Riguzzi@unife.it}
+\and
+BOB KOWALSKI \\
+Imperial College, London\\
+\email{r.kowalski@imperial.ac.uk}
+\and
+TORBJ\"ORN LAGER \\
+University of Gothenburg\\
+\email{lager@ling.gu.se}
+}
+
+\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+\volume{\textbf{?} (?):}
+%\jdate{August 2007}
+\setcounter{page}{1}
+%\pubyear{2007}
+
+\maketitle
+\begin{abstract}
+Programming environments have evolved from purely text based to
+graphical user interfaces while we now see a move towards web based
+interfaces such as Jupyter. Web based interfaces allow for creating an
+interactive document that consists of text, programs as well as their
+output. The output can be rendered using web technology as, e.g., text,
+tables, charts or graphs. This approach is particularly suitable for
+capturing data analysis workflows and creating interactive educational
+material. This article describes SWISH, a web frontend for Prolog that
+consists of a web server implemented in SWI-Prolog and a client web
+application written in JavaScript. SWISH provides a web server where
+multiple users can manipulate and run the same material. SWISH can be
+adapted to support Prolog extensions such as probabilistic logic
+programs or Logic Production System (LPS). We describe the architecture
+of SWISH and how the system can be used to create a tutorial site for
+two derived languages.
+\end{abstract}
+
+
+\begin{keywords}
+Prolog, logic programming system
+\end{keywords}
+
+\newpage
+\subsection*{Temporary!}
+\tableofcontents
+\newpage
+
+\input{introduction.tex}
+\input{architecture.tex}
+\input{edu.tex}
+\input{extending.tex}
+\input{conclusions.tex}
+
+\section*{Acknowledgements}
+
+\bibliography{swipl}
+
+\end{document}
