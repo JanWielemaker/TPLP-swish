@@ -1,5 +1,19 @@
 \section{Extending SWISH}
 \label{sec:extending}
 
+SWISH can be extended to support languages built on top of Prolog. We
+assume that the new language uses Prolog syntax, typically extended with
+additional operators. We also assume we still have a \jargon{program}
+and queries about this program that have zero, one or more answers. An
+extension consists of:
+
+\begin{itemize}
+    \item Provide syntax highlighting support for the target
+          language.
+    \item Provide additional \jargon{answer rendering} plugins.
+    \item Change the program or notebook \jargon{profiles}
+    \item Add notebooks and programs that provide examples.
+\end{itemize}
+
 \input{cplint.tex}
 \input{lps.tex}
