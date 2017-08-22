@@ -12,11 +12,11 @@ sub printTeX
   s/(\w\.\w)\.(\s+[a-z])/\1.\\\2/g;
   s/(^|[^\w}\\])@([a-z]\w*)/\1\\index{@\2}\\objectname{\2}/g;
   s/(^|[^'])<(\w[-~\w]*)>/\1\\bnfmeta{\2}/g;
-  s/\\class{([<\\=>]*)}/\\verb!\1!/g;
+  s/\\class\{([<\\=>]*)\}/\\verb!\1!/g;
   s/==>/\$\\longrightarrow\$/g;
-  s/^((\\index{[^}]+})+) *$/\1%/;
-  s/(\\index{[^}]*)\\index{[^}]*}([^}]*})/\1\2/g;
-  s/(\\class(get|send|both){)\\index{[^}]*}/\1/g;
+  s/^((\\index\{[^}]+\})+) *$/\1%/;
+  s/(\\index\{[^\}]*)\\index\{[^}]*\}([^}]*\})/\1\2/g;
+  s/(\\class(get|send|both)\{)\\index\{[^}]*\}/\1/g;
   s/(PL_[a-z_]*)\(([^\)]*)\)/\\funcref{\1}{\2}/g;
   s/(SP_[a-z_]*)\(([^\)]*)\)/\\funcref{\1}{\2}/g;
   s/([a-z_]+)\(\)/\\funcref{\1}{}/g;
@@ -24,10 +24,10 @@ sub printTeX
 # Prolog special arguments ...
 # TBD: pick these up automatically from pl.sty
 
-  s/\\file{([^}]*\\bnfmeta[^}]*)}/\\metafile{\1}/g;
-  s/\\file{([^}]*\\arg[^}]*)}/\\metafile{\1}/g;
-  s/\\file{([^}]+)}/\\file@\1@/g;
-  s/\\htmloutput{([^}]+)}/\\htmloutput@\1@/g;
+  s/\\file\{([^}]*\\bnfmeta[^}]*)\}/\\metafile{\1}/g;
+  s/\\file\{([^}]*\\arg[^}]*)\}/\\metafile{\1}/g;
+  s/\\file\{([^}]+)\}/\\file@\1@/g;
+  s/\\htmloutput\{([^}]+)\}/\\htmloutput@\1@/g;
 
   s/{#!}/{\\Sexe}/g;
   s/{#>}/{\\Scgt}/g;
@@ -94,7 +94,7 @@ sub printTeX
   s/{-->}/{\\Sdcg}/g;
   s/{~}/{\\Stilde}/g;
   s/{%}/{\\Spercent}/g;
-  s/{{}}/{\\Scurl}/g;
+  s/{\{\}}/{\\Scurl}/g;
   s/{xXX..\\}/{\\SxXX}/g;
 
   s/\\file@([^@]+)@/\\file{\1}/g;
@@ -127,7 +127,7 @@ sub printCode
   while (<ARGV> )
   { &expandTabs;
     print;
-    if ( /\\end{(code|verbatim)}/ )
+    if ( /\\end\{(code|verbatim)\}/ )
     { return;
     }
   }
@@ -140,7 +140,7 @@ sub printPceCode
   while (<ARGV> )
   { $line++;
     &expandTabs;
-    if ( /\\end{pcecode}/ )
+    if ( /\\end\{pcecode\}/ )
     { print;
       return;
     }
@@ -167,12 +167,12 @@ sub skiptonext
 #	MAIN PROGRAM
 
 while (<>)
-{ while ( /\\begin{pcecode}/ )
+{ while ( /\\begin\{pcecode\}/ )
   { &printPceCode;
     print "\n\\noindent\n";
     &skiptonext;
   }
-  while ( /\\begin{(code|verbatim)}/ )
+  while ( /\\begin\{(code|verbatim)\}/ )
   { &printCode;
     print "\n\\noindent\n";
     &skiptonext;
