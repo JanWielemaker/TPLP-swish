@@ -1,6 +1,8 @@
 \section{Related work}
 \label{sec:related}
 
+\TODO{Revise and extend}
+
 We are not aware of other initiatives that aim at developing a rich
 web-based development environment for Prolog. We do not compare SWISH
 with traditional editor or GUI based development environments for Prolog
