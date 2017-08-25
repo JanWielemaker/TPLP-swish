@@ -1,22 +1,28 @@
 \section{The SWISH application}
 \label{sec:application}
 
-In the following sections we describe SWISH in terms of interface
-components, where we discuss the requirements, the user aspects, the
-client code and supporting server functionality	for each component.
-First, we provide a screendump that illustrates the main components
-in \figref{swish}.
+Before going into a technical description of the architecture in
+\secref{arch} we present the functionality of the key components of
+SWISH as it is exposed to the user. SWISH has two `faces'. The first is
+an `IDE' face where it shows a program editor, a query editor and query
+answers (see \figref{swish}. This is the original interface and it is
+the most suitable for program development and testing. Programs created
+this way may be saved and reused in other programs or notebooks (see
+include/1 in \secref{gitty}). The second `face' is the notebook face
+described in \secref{notebook}. The notebook interface is particularly
+suitable for educational applications and recording data science
+workflows. First we describe the components of the IDE interface. The
+notebook interface reuses these components.
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/swish-screendump}
-    \caption{Screendump of SWISH. The left pane shows the source code,
-	     while the top-right pane shows a query \jargon{runner} that
-	     exploits the current selected answer \jargon{renderer} and
-	     buttons on how to continue after the first answer. The
-	     bottom-right pane provides the query editor with access to
-	     example queries stored in the source, query history, apply
-	     solution modifiers, result presentation and a \textsf{Run!}
-	     button to start the query.}
+    \caption{Screendump of SWISH in `IDE' mode. The left pane shows the
+	     source code, while the top-right pane shows a query \jargon{runner}
+	     that exploits the current selected answer \jargon{renderer} and
+	     buttons on how to continue after the first answer. The bottom-right
+	     pane provides the query editor with access to example queries stored
+	     in the source, query history, apply solution modifiers, result
+	     presentation and a \textsf{Run!} button to start the query.}
     \label{fig:swish}
 \end{figure}
 
@@ -26,14 +32,16 @@ in \figref{swish}.
 \label{sec:queryeditor}
 
 The \jargon{query editor} is based on the same jQuery plugin that
-realises the code editor and thus profits from the syntax
-highlighting, template insertion and hovering plugins.  In addition,
-it provides three popup menus:
+realises the code editor and thus profits from the syntax highlighting,
+template insertion and hovering plugins. In addition, it provides three
+popup menus:
 
 \begin{description}
-    \item[Examples] This menu is filled from the structured comments
-described above.  The examples menu is shown in \figref{lpn}.
-    \item[History] This menu provides earlier executed queries.
+    \item[Examples] This menu is filled from structured comments
+in the program.  It provides a menu entry for adding the current
+query to the program, either creating an \verb$/** <examples ... */$
+comment or extending an existing one.
+    \item[History] This menu provides access to previously executed queries.
     \item[Solutions]  This menu embeds an existing query in a meta-call to
 alter the result. Currently provided operations are \textit{Aggregate
 (count all)}, \textit{Order by}, \textit{Distinct}, \textit{Limit},
@@ -49,19 +57,11 @@ how the menu is used to count the solutions of a goal.
     \label{fig:aggregate}
 \end{figure}
 
-\TODO{moved; needs to be re-integrated}
-Prolog source files can embed \jargon{example queries} using structured
-comments, where each sequence from \verb$?-$ to the matching full stop
-token is added to the \textsf{Examples} menu of the query panel (see
-\figref{lpn}). The comment below illustrates a call to append/3 embedded
-in the source window.
+When the user is happy with the query, the \textsf{Run!} button can be
+used to execute the query. Pressing \textsf{Run!} collects the current
+program and query and creates a \jargon{runner} instance which is
+discussed in the next section.
 
-\begin{code}
-/** <examples>
-
-?- append([one], [two,three], List).
-*/
-\end{code}
 
 %================================================================
 \subsection{Running a query: runners in the answer pane}
@@ -74,15 +74,18 @@ all runners inside it. Provided actions are \textsf{Collapse all},
 in the answer pane represents a query. The query may be completed,
 running or waiting for user input. SWISH can manage multiple active
 queries at the same time, up to an application defined maximum
-(default~3).
+(default~3). Once a runner has been created from the program and query
+its execution no longer depends on that and the user can thus adjust the
+program and/or query and create more runners while the query is
+executing.
 
-Each runner provides its own set of commands to control the specific
-query. During execution a runner provides an \textsf{Abort} button.
-After query evaluation completes with an answer and more answers may be
-available the runner allows for asking the next 1, 10, 100 or 1,000
-results or to \textsf{Stop} the query. In addition, the runner shows a
-\jargon{text input} field when the application wants to read input and
-may show debugger interaction buttons if the tracer is being used (see
+Each runner provides its own set of commands to control its query.
+During execution a runner provides an \textsf{Abort} button. After query
+evaluation completes with an answer and more answers may be available
+the runner allows for asking the next 1, 10, 100 or 1,000 results or to
+\textsf{Stop} the query. In addition, the runner shows a \jargon{text
+input} field when the application wants to read input and may show
+debugger interaction buttons if the tracer is being used (see
 \secref{tracer}).
 
 A runner can render answers in two modes, the classical Prolog mode or
@@ -91,22 +94,13 @@ as a table, similar to what many database interfaces provide. The
 \figref{aggregate}), while the former is more suitable for rendering
 small amounts of complex answers such as the chessboard position in
 \figref{swish}. By default, Prolog terms are rendered as structured HTML
-objects, where rendered text is the same as Prolog's \index{writeq/1}\predref{writeq}{1} predicate.
+objects, where rendered text is the same as Prolog's writeq/1 predicate.
 
 The server can provide \jargon{rendering libraries} that render Prolog
 terms using dedicated HTML. In \figref{swish}, the `chess' renderer is
 loaded which translates a list of length $N$ holding integers in the
-range $1..N$ as a chessboard with queens. In addition to the chess
-rendering library, SWISH provides rendering libraries for sudoku
-puzzles, parse trees and tables. The ClioPatria version adds a
-renderer for RDF resources that renders the resource more compactly and
-provides a hyperlink for obtaining details. If a term can be rendered in
-multiple ways, the interface provides a hover menu to select between the
-alternatives. \Figref{render} illustrates this functionality. The render
-facility is similar to the Prolog \index{portray/1}\predref{portray}{1} hook that allows changing
-the result printed for terms with a specific shape.  However, it can
-exploit the full potential of HTML (or SVG) and the interface allow for
-switching the selected rendering.
+range $1..N$ as a chessboard with queens. The interface allows for
+switching the selected rendering as illustrated in \figref{render}.
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/render}
@@ -117,31 +111,13 @@ switching the selected rendering.
     \label{fig:render}
 \end{figure}
 
-If the SWISH user hits the \textsf{Run!} button, the content of the
-source pane is used to create a new pengine. Subsequently, the content
-of the query pane is sent as the one and only query that will be
-executed by the pengine.\footnote{Pengines can execute multiple queries.
-We do not use this facility because a fresh pengine starts in a
-predictable state (standard operators, empty dynamic database).} Before
-execution, the query is verified to be \emph{safe}, unless sandboxing is
-disabled (see \secref{cliopatria}). The sandbox component is discussed
-in \secref{sandbox}
-
-The pengine's default working module may be pre-loaded with code. SWISH
-uses this facility to redefine the Prolog I/O predicates such as \index{read/1}\predref{read}{1},
-\index{write/1}\predref{write}{1}, \predref{format}{1,2,3}, etc. The ClioPatria version
-(\secref{cliopatria}) also preloads the RDF libraries, so users can run
-queries on the RDF database without explicitly importing the required
-libraries.
-
-
 
 %================================================================
 \subsubsection{Debugging}
 \label{sec:tracer}
 
 The SWISH debugger is based on the traditional 4-port debugging model
-for Prolog. \Figref{tracer} shows the tracer in action on \index{sublist/2}\predref{sublist}{2} from
+for Prolog. \Figref{tracer} shows the tracer in action on sublist/2 from
 the \textit{Lists} example source. The debugger was triggered by a
 break-point on line~10 set by clicking on the line-number in the code
 editor. The debugging interaction is deliberately kept simple and
@@ -155,3 +131,79 @@ for highlighting the unique feature of Prolog to re-evaluate a goal.
     \label{fig:tracer}
 \end{figure}
 
+%================================================================
+\subsection{The notebook interface}
+\label{sec:notebook}
+
+A notebook is, inspired by IPython notebooks, a series of \jargon{cells}
+that is displayed in page order (top-down). The notebook menu allows for
+adding a cell, copy/paste a cell, deleting a cell and reordering cells.
+SWISH supports four cell types: \jargon{program}, \jargon{query},
+\jargon{markdown} and \jargon{HTML}. The program and query cells are
+instances of the code editor and query editor. The markdown and HTML
+cells have two modes. By default they are displayed in rendered mode.
+Double clicking them transforms them into a codemirror editor instance
+with syntax highlighting support. Clicking outside the cell re-enables
+the rendered mode. Cells have a dynamic height that fits their content.
+Program cells have a maximum height and may be collapsed to a single
+line.
+
+Notebooks have two types of programs, \jargon{local} and
+\jargon{global}. A query that is being executed creates a
+\jargon{runner} using the first local program cell above it and all
+global program cells. This is commonly used to realise variants of a
+query. In this scenario a global program cell is placed (usually) at the
+bottom of the notebook that provides the shared code for all queries.
+Just above the query cell we place a program cell that parameterizes the
+program. For example, we have a database with different time based
+events and we wish to create charts of various of these events. In this
+case we write generic code use C3.js or R to vizualize time series in
+the global program. Next, we provide clauses to select events as
+parameterization to vizualize the events we are interested in as a local
+program. A simple generic query completes the picture.
+
+Notebook queries have a settings button that determines whether the
+results are shown as a table or a traditional set of bindings, whether
+or not the query should be executed when the page is loaded and how
+many results to show initially.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/notebook}
+    \caption{Screendump of SWISH in `notebook' mode.  The displayed
+	     notebook is from the \textsf{Examples} menu, showing
+	     statistics from the running SWISH server.  The visible
+	     part contains two queries, the bottom one being executed.
+	     The result is a chart showing the number of running
+	     queries (Pengines), Prolog threads and visitors of the
+	     website.  The result is rendered using C3.js.}
+    \label{fig:notebook}
+\end{figure}
+
+
+%================================================================
+\subsection{Remote access to SWISH}
+\label{sec:remote}
+
+SWISH can be integrated in workflows with external tools and data. The
+integration options are embedding, downloading query results as CSV,
+accessing SWISH as a service and accessing other services from SWISH.
+
+\jargon{Embedding} SWISH in a web page using an \elem{iframe} is
+particularly appealing for educational deployment. The SWISH interface
+can be preloaded with a \jargon{background program} (an invisible
+program that is sent along with each query), a \jargon{program} (that
+appears in the code editor), a \jargon{qeury} and \jargon{examples} that
+appear in the query editor. It can also be preloaded with a
+\jargon{notebook}.
+
+Both a \jargon{runner} and the notebook query editor provide a menu to
+download the query answers as CSV. The subsequent dialogue allows for
+setting a limit on the number of results and defining the
+\jargon{projection}; the variables included in the CSV and the order of
+these variables.
+
+The Pengine API has clients for Prolog, JavaScript, Java, Ruby and
+Erlang. This API can be used to execute queries against programs that
+are provided by the client or available as saved documents on the SWISH
+server. SWISH instances can be configured to make SWI-Prolog's
+primitives to access data available to users.
