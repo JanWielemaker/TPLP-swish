@@ -14,7 +14,7 @@ HTML=$(DOC).html
 RUNTEX=./runtex
 
 TEX=	introduction.tex architecture.tex edu.tex extending.tex \
-	cplint.tex lps.tex conclusions.tex \
+	cplint.tex lps.tex related.tex conclusions.tex \
 	$(DOC).tex
 
 
