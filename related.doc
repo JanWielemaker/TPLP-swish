@@ -1,2 +1,45 @@
 \section{Related work}
 \label{sec:related}
+
+We are not aware of other initiatives that aim at developing a rich
+web-based development environment for Prolog. We do not compare SWISH
+with traditional editor or GUI based development environments for Prolog
+because web-based environments provide new opportunities and pose new
+challenges. Instead, we discuss three applications that have served as
+inspiration for SWISH: JSFiddle,\footnote{\url{https://jsfiddle.net/}}
+R-Studio\footnote{\url{http://www.rstudio.com/}} and IPython
+Notebook.\footnote{\url{http://ipython.org/notebook.html}}
+
+\begin{itemize}
+\item
+As stated, the initial inspiration for SWISH was JSFiddle. Unlike
+JSFiddle though, Prolog is executed on the server rather than in the
+browser.
+
+\item
+R-Studio \cite{gandrud2013reproducible} is an interface to the R
+statistical package. Although not a web application, it is based on the
+Qt webkit framework and uses web based technology in the background.
+R-Studio came into the picture when the COMMIT/ project provided a grant
+for developing SWISH as a toolkit for analysis of relational (SQL) data.
+The R-studio interface has a similar layout as SWISH, providing a source
+window, a console and an output plane that typically shows results in
+tables or charts.
+
+\item
+IPython Notebook \cite{rossant2013learning} allows mixing markdown or
+HTML text with Python sources. The rendered Notebook shows the text,
+sources and possible results in the form of numbers, tables or charts.
+\end{itemize}
+
+SWISH embodies most of the ideas behind JSFiddle and R-Studio. Embedding
+of SWISH in documents is demonstrated in \secref{lpn}. Interactive
+editing of documents that embed SWISH is discussed in future work
+(\secref{future}).
+
+Both R-Studio and IPython Notebook work on the basis of
+\jargon{authentication} (either to the OS or application), after which
+any command may be executed.  SWISH can operate both as a public service
+granting access to non-intrusive queries and as an authenticated service
+to run arbitrary queries, for example for maintenance purposes.  See
+\secref{cliopatria}.
