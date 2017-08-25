@@ -5,7 +5,7 @@ Interactive languages such as Prolog traditionally provide a
 \jargon{console} to which you type commands (queries) and where the
 output (answers) appear in textual form. The programming environment
 consists of this interactive session, a code editor and optionally tools
-such as cross-referencing, profiling, testing, etc. These may be
+for cross-referencing, profiling, testing, etc. These may be
 integrated in a single frontend called an \jargon{Integrated Development
 Environment} (IDE) such as, e.g., Emacs, Eclipse or Visual Studio.
 
@@ -16,7 +16,7 @@ program for \TeX{} from a single document using \program{tangle} and
 \program{weave}. Note that in Knuth's vision the text was more design
 documentation than merely simple comments. For program development
 purposes literate programming evolved into generating program
-documentation from source code based on properties from the code itself
+documentation from source code based on properties of the code itself
 such as class names or function names and \jargon{structured comments}.
 The structured comments use the comment syntax of the target language,
 avoiding the need for \program{tangle} to extract the program from the
@@ -26,7 +26,7 @@ and process the result using a markup language such as HTML, \LaTeX{} or
 markdown. Well known examples of this class are JavaDoc and Doxygen.
 
 Notably for domains were programs are used to perform calculations on
-raw (experimental) data and produce derived data and charts the
+raw (experimental) data and produce derived data and charts, the
 traditional literate programming approach has been extended to include
 the result of the program such as a table or chart into the document.
 A \LaTeX{} based approach for this is \TODO{find ref}.
@@ -45,7 +45,7 @@ In this article we are interested in the educational opportunities
 provided by notebook interfaces and we concentrate on Prolog and Prolog
 based languages. Prolog has a number of distinctive features that are
 hard to support in systems that are designed for more widespread
-languages. First, the program-is-data feature, combined with the absense
+languages. First, the program-is-data feature, combined with the absence
 of keywords complicates syntax highlighting, completion and other user
 support found in modern editors and expected by todays users. Second,
 non-determinism allows generating multiple answers for one query, which
