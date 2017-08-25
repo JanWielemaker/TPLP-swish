@@ -1,2 +1,50 @@
 \section{Using SWISH in Prolog education}
 \label{sec:edu}
+
+The educational potential of SWISH was immediately obvious. First of all
+it provides a sufficiently rich Prolog environment for basic educational
+needs without installing software. The relatively simple and modern web
+interface appears to be more appealing to students.  SWISH allows for
+students to save their assignment as anonymous program and send a link
+to their teacher.
+
+The next obvious application is to exploit the ability to embed SWISH
+using an \elem{iframe} element into existing online course material. The
+first example was created by us for Learn Prolog
+Now!\footnote{\url{http://www.learnprolognow.org}}. Learn Prolog Now! is
+an online version of a Prolog book by Patrick Blackburn, Johan Bos, and
+Kristina Striegnitz \cite{blackburn2006learn}. We established a proof of
+concept that embeds SWISH in the online course
+material.\footnote{\url{http://lpn.swi-prolog.org}} It is realised as a
+Prolog hosted \jargon{proxy} that fetches the pages from the main site
+and serves the enhanced pages to the user. The proxy identifies and
+classifies the code fragments in terms of `source code' `queries' and
+dependencies. Next, it adds a button to the source fragments that, when
+pressed, replaces the HTML \elem{pre} element with in \elem{iframe}
+running SWISH filled with the source while the example queries are added
+to the \textsf{Examples} menu (\figref{lpn}). The queries are executed
+by \url{http://swish.swi-prolog.org}. The proxy server served 304,205
+pages (user pages, excluding javascript, css and images) during 2016.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/lpn}
+    \caption{Screendump of Learn Prolog Now with opened SWISH instance
+	     that shows the collected source as well as example queries
+	     from the subsequent text that are classified as relating to
+	     this source.  The embedded SWISH provides all functionality
+	     available in the stand-alone SWISH. If the user presses the
+	     close button, SWISH will be removed and the original code
+	     re-appears.}
+    \label{fig:lpn}
+\end{figure}
+
+A recent example of this class is \textit{Simply Logical} by Peter
+Flach. This book has been republished
+online\footnote{\url{http://book.simply-logical.space/}}
+
+From private mail exchange we know that several universities run local
+copies of SWISH to support education. We have no information on the
+scale and whether or not this concerns customized versions, for example
+preloaded with examples and assignments.
+
+
