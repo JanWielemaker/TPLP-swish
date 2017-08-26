@@ -33,7 +33,7 @@ pages (user pages, excluding javascript, css and images) during 2016.
 	     from the subsequent text that are classified as relating to
 	     this source.  The embedded SWISH provides all functionality
 	     available in the stand-alone SWISH. If the user presses the
-	     close button, SWISH will be removed and the original code
+	     close button, SWISH is removed and the original code
 	     re-appears.}
     \label{fig:lpn}
 \end{figure}
@@ -46,5 +46,3 @@ From private mail exchange we know that several universities run local
 copies of SWISH to support education. We have no information on the
 scale and whether or not this concerns customized versions, for example
 preloaded with examples and assignments.
-
-
