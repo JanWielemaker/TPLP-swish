@@ -48,7 +48,7 @@ file. Currently, \file{swish-min.js} is 1.1Mb (308Kb compressed) and
     allows for folding and unfolding terms. SWISH allows for alternative
     term rendering using e.g., tables, charts, graphs, etc.  This may
     be compared to the traditional portray/1 hook, but may exploit
-    the ful potentional of HTML5, CSS, SVG and JavaScript.  See
+    the full potential of HTML5, CSS, SVG and JavaScript.  See
     \secref{rendering}.
 
     \item A \textbf{notebook} is a list of \jargon{cells} built from
@@ -70,8 +70,8 @@ file. Currently, \file{swish-min.js} is 1.1Mb (308Kb compressed) and
 \subsection{The SWISH server components}
 \label{sec:server-components}
 
-The SWISH server is a monolitic web server written entirely in
-SWI-Prolog. The code heavilily depends (see \secref{portability}) in the
+The SWISH server is a monolithic web server written entirely in
+SWI-Prolog. The code heavily depends (see \secref{portability}) on the
 SWI-Prolog web libraries. The current 20K source lines are distributed
 over 67 files.  Below we describe the key components:
 
@@ -81,7 +81,7 @@ over 67 files.  Below we describe the key components:
     on cross-reference analysis. In addition, the \jargon{mode
     declarations} from the documentation, e.g.,
     \exam{thread_create(:Goal, -Id, +Options) is det} are compiled into
-    a JSON object to support the CodeMirror \jargon{template}
+    a JSON object to support  CodeMirror \jargon{template}
     support.  See \secref{codemirror}.
 
     \item Running a query is managed by a \jargon{Pengine}.  The
@@ -90,11 +90,11 @@ over 67 files.  Below we describe the key components:
     is one of the optional facilities of the Pengine service.  When
     enforced, the user is limited to \jargon{whitelisted} predicates.
     The default set of these ensure the user cannot permanently modify
-    the server and cannot access privacy senstive information.
+    the server and cannot access privacy sensitive information.
 
     \item Query answers are processed by the \textbf{rendering service}.
     The set of Prolog plugins recognises Prolog terms (like portray/1)
-    and emit an HTML node. This node in turn may include CSS, JavaScript
+    and emits an HTML node. This node in turn may include CSS, JavaScript
     or SVG.  Providing additional rendering plugins is a common way to
     customise SWISH.  See \secref{extending}.
 
@@ -110,10 +110,10 @@ over 67 files.  Below we describe the key components:
     The same file store can be safely shared by multiple SWISH
     instances.
 
-    \item The \textbf{authentication} and \textbf{authorization} can
+    \item  \textbf{Authentication} and \textbf{authorization} can
     be used to provide optional or obligatory login using HTTP
     authentication (basic or digest) or the oauth2 federated login.
-    Authorized users can be assigned rights to documents.  Authorizion
+    Authorized users can be assigned rights to documents.  Authorization
     can also be used to disable the \textbf{sandbox} restrictions on
     permitted queries for certain users.
 
@@ -145,7 +145,7 @@ refer to the built-in predicate is/2, but also some predicate with a
 different arity, just a constant, etc. Another example is \exam{X-Y}
 which can both be an arithmetic expression or a \jargon{pair} as used
 with, e.g., keysort/2. SWI-Prolog's native editor, called PceEmacs,
-resolves this problem by closely integrating Prolog with the editor.
+solves this problem by closely integrating Prolog with the editor.
 While typing, the current term (clause or directive) is parsed and
 analysed in the context of the current file and the file's imports after
 each keystroke. If the term has valid syntax, all tokens are coloured
@@ -168,14 +168,14 @@ Tokenizing Prolog is sufficient to colour comments, quoted material
 (strings, quoted atoms), variables and constants (atoms and numbers).
 The tokeniser also keeps track of bracket nesting to support smart
 indentation. CodeMirror's token-based highlighting does \emph{not} allow
-for look ahead over line breaks. As a result we are not be able to count
+for look ahead over line breaks. As a result we are not able to count
 the \jargon{arity} of terms that are broken over multiple lines. As
 terms with the same name but different arity are not related in Prolog
 this prevents unambiguous meaningful colouring.
 
 We resolve this issue using server-side support to realise
 \jargon{semantic} highlighting. First, the changes to the content of the
-editor are forwarded to the server server which maintains a mirror of
+editor are forwarded to the server which maintains a mirror of
 the editor content. Second, the editor asks the server to produce a list
 of semantically enriched tokens for the source. The tokens are returned
 as a list-of-lists, where each inner list represents the tokens for a
@@ -308,7 +308,7 @@ these conditions:
 \label{sec:portability}
 
 The SWISH client libraries are based on mature JavaScript libraries. The
-client runs all modern major browsers with HTML5, CSS and JavaScript
+client runs in all modern major browsers with HTML5, CSS and JavaScript
 support. It is frequently tested on FireFox, Chrome, Safari and Internet
 Explorer~11.
 
@@ -356,5 +356,5 @@ provides the web interface and most of the development tools and another
 language, not even necessarily Prolog, provides the query solving. The
 interface between the two can be based on interprocess communication or,
 especially if the target system is safe and capable of supporting
-threads, by linkin the target system into the process and using the
+threads, by linking the target system into the process and using the
 C~interface.
