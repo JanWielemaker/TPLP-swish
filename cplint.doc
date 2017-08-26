@@ -1,2 +1,65 @@
-\subsection{The cplint system}
+\subsection{The cplint on SWISH system}
 \label{sec:cplint}
+
+cplint on SWISH\footnote{http://cplint.ml.unife.it} \cite{RigBelLam16-SPE-IJ,AlbBelCot17-IA-IJ} is a web
+application for experimenting with
+Probabilistic Logic Programming (PLP), an extension of logic programming for dealing
+with uncertainty by means of probability theory.
+
+In particular, it handles languages that follow the distribution semantics
+\cite{DBLP:conf/iclp/Sato95ijar}: a probabilistic program defines a probability
+distribution over normal programs called \jargon{instances}
+and the probability of a query is the sum
+of the probabilities of the instances where the query is true. This approach
+has recently gained prominence  and it is adopted by many languages such as
+Logic Programs with Annotated
+Disjuctions (LPADs) \cite{VenVer04-ICLP04-IC}, ProbLog \cite{DBLP:conf/ijcai/RaedtKT07}
+and PRISM \cite{DBLP:conf/iclp/Sato95ijar}. All these languages are handled
+by cplint on SWISH. They have the same expressive power, as there are
+transformation of linear complexity among each other. All offer the possibility
+of expressing probabilistic choices: for example, LPADs allow disjunctions
+in the head of clauses where each disjunct is annotated with a probability, the
+meaning of a clause of this form being that if the body is true, then one of
+the head atoms is true with its corresponding probability.
+
+In PLP the reasoning tasks are inference, parameter learning and structure
+learning. In inference, the aim is to compute the probability of a query,
+possibly given some evidence, to a program. Generating all possible instances
+is not viable because there is an exponential number of them so smarter
+algorithms must be adopted. One of the most successful approaches is
+\jargon{knowledge compilation}, where the program is compiled into an
+intermediate language from which the computation of the probability is easy.
+cplint on SWISH includes the PITA algorithm \cite{RigSwi13-TPLP-IJ}
+that compiles the program to a Binary Decision Diagram (BDD) exploiting the
+CUDD library\footnote{\url{http://vlsi.colorado.edu/~fabio/}} and computes the
+probability with a dynamic programming algorithm. However, inference is
+intractable in general so approximate algorithms have been developed.
+cplint on SWIH includes MCINTYRE \cite{Rig13-FI-IJ} that uses a Monte Carlo
+approach: samples of the truth value of the query are repeatedly taken and
+the probability of the query is given by the relative frequency of the true
+value.
+
+In parameter learning, the user has a program for which he does not know
+the probabilistic parameters and wants to learn the parameters from data.
+In structure learning, the user wants to learn both the structure of the
+clauses and the parameters from data.
+In cplint on SWISH learning can be performed from data in the form of a
+set of interpretations, each expressing a possible state of the world.
+One predicate is identified as target and true and false atoms for it in the
+interpretations are used as positive and negative examples respectively.
+Parameter learning needs an EM algorithm, as the model includes unobserved
+variables. EMBLEM \cite{BelRig13-IDA-IJ} is available in cplint on SWISH and
+uses a special dynamic programming algorithm operating on BDDs for implementing
+EM.
+For structure learning, cplint on SWISH includes SLIPCOVER
+\cite{BelRig15-TPLP-IJ} that performs a beam search in the space of clauses
+and scores them using the log likelihood of the data after parameter learning
+by EMBLEM.
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/cplint}
+    \caption{Screendump of cplint on SWISH with opened
+    Kalman filter example together with the results of
+    a MCINTYRE query graphed with R.}
+    \label{fig:cplint}
+\end{figure}
