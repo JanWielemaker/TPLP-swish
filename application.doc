@@ -5,7 +5,7 @@ Before going into a technical description of the architecture in
 \secref{arch} we present the functionality of the key components of
 SWISH as it is exposed to the user. SWISH has two `faces'. The first is
 an `IDE' face where it shows a program editor, a query editor and query
-answers (see \figref{swish}. This is the original interface and it is
+answers (see \figref{swish}). This is the original interface and it is
 the most suitable for program development and testing. Programs created
 this way may be saved and reused in other programs or notebooks (see
 include/1 in \secref{gitty}). The second `face' is the notebook face
@@ -32,7 +32,7 @@ notebook interface reuses these components.
 \label{sec:queryeditor}
 
 The \jargon{query editor} is based on the same jQuery plugin that
-realises the code editor and thus profits from the syntax highlighting,
+realises the code editor and thus profits from  syntax highlighting,
 template insertion and hovering plugins. In addition, it provides three
 popup menus:
 
@@ -155,7 +155,7 @@ global program cells. This is commonly used to realise variants of a
 query. In this scenario a global program cell is placed (usually) at the
 bottom of the notebook that provides the shared code for all queries.
 Just above the query cell we place a program cell that parameterizes the
-program. For example, we have a database with different time based
+program. For example, suppose we have a database with different timed 
 events and we wish to create charts of various of these events. In this
 case we write generic code use C3.js or R to vizualize time series in
 the global program. Next, we provide clauses to select events as
