@@ -205,5 +205,19 @@ these variables.
 The Pengine API has clients for Prolog, JavaScript, Java, Ruby and
 Erlang. This API can be used to execute queries against programs that
 are provided by the client or available as saved documents on the SWISH
-server. SWISH instances can be configured to make SWI-Prolog's
+server. 
+
+The client for Prolog even offers a predicate for making non-deterministic RPC calls, like so:
+
+\begin{code}
+?- use_module(library(pengines)).
+true.
+?- pengine_rpc('https://swish.swi-prolog.org', member(X,[a,b,c])).
+X = a ;
+X = b ;
+X = c.
+?-
+\end{code}
+
+SWISH instances can be configured to make SWI-Prolog's
 primitives to access data available to users.
