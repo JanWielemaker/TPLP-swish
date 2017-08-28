@@ -56,10 +56,65 @@ For structure learning, cplint on SWISH includes SLIPCOVER
 and scores them using the log likelihood of the data after parameter learning
 by EMBLEM.
 
+All the algorithms are available as modules to be loaded in a regular Prolog
+input file. Each modules offers directives to separate various sections of the
+source with different roles: for example, for holding the probabilistic logic
+program for inference or parameter learning or the background knowledge for
+parameter or structure learning.
+These directives are handled using term_expansion/2 and activate or deactivate
+other term_expansion/2 clauses that process the probabilistic clauses and
+transform them into Prolog clauses to be used by the  algorithms.
+
+All these modules were initially written for single user use and were using
+asserts in the algorithms modules. This does not work in the multi-user context
+of cplint on SWISH. Therefore the modules were modified so that the asserts
+are performed in the module that is created for the individual pengine.
+This module is obtained in term_expansion/2 clauses using the predicate
+prolog_load_context/2 that is available during compilation.
+This module name is
+temporarily stored in the algorithm module during compilation but is
+insulated from other input files using the thread_local/1 directive
+and is removed at the end of compilation.
+
+Moreover, the information on the pengine module is necessary also to answer
+queries, so all inference and learning predicates are declared as meta.
+
+cplint on SWISH includes many examples from various domains:
+reasoning about actions,
+random walks,
+marketing,
+natural language,
+biology,
+puzzles,
+genetics,
+model checking,
+medicine,
+games,
+social networks,
+filtering,
+Bayesian estimation,
+regression.
+
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/cplint}
     \caption{Screendump of cplint on SWISH with opened
     Kalman filter example together with the results of
     a MCINTYRE query graphed with R.}
     \label{fig:cplint}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/cplint-path}
+    \caption{Screendump of cplint on SWISH with opened
+    Kalman filter example together with the results of
+    a MCINTYRE query graphed with R.}
+    \label{fig:cplint-path}
+\end{figure}
+
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/cplint-map}
+    \caption{Screendump of cplint on SWISH with opened
+    Kalman filter example together with the results of
+    a MCINTYRE query graphed with R.}
+    \label{fig:cplint-path}
 \end{figure}
