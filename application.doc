@@ -155,7 +155,7 @@ global program cells. This is commonly used to realise variants of a
 query. In this scenario a global program cell is placed (usually) at the
 bottom of the notebook that provides the shared code for all queries.
 Just above the query cell we place a program cell that parameterizes the
-program. For example, suppose we have a database with different timed 
+program. For example, suppose we have a database with different timed
 events and we wish to create charts of various of these events. In this
 case we write generic code use C3.js or R to vizualize time series in
 the global program. Next, we provide clauses to select events as
@@ -199,7 +199,7 @@ appear in the query editor. It can also be preloaded with a
 Both a \jargon{runner} and the notebook query editor provide a menu to
 download the query answers as CSV. The subsequent dialogue allows for
 setting a limit on the number of results and defining the
-\jargon{projection}; the variables included in the CSV and the order of
+\jargon{projection}, the variables included in the CSV and the order of
 these variables.
 
 The Pengine API has clients for Prolog, JavaScript, Java, Ruby and
