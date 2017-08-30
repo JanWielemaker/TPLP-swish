@@ -155,7 +155,7 @@ red, a call to a built-in or imported predicate is blue and a recursive
 call is underlined. The libraries that implement this analysis have been
 decoupled from the native IDE, both to support source colouring for the
 SWI-Prolog documentation system PlDoc \cite{Wielemaker:2007c} and
-ProDT\footnote{\url{http://prodevtools.sourceforge.net}, these libraries
+ProDT.\footnote{\url{http://prodevtools.sourceforge.net}, these libraries
 are not yet used by ProDT.}
 
 There are two dominant open source and actively maintained in-browser
@@ -215,7 +215,7 @@ inserted as notes into the source code.
 \subsection{Document storage and version management}
 \label{sec:gitty}
 
-SWISH explicitly targets the cooperative development of Prolog programs
+SWISH explicitly targets the cooperative development of Prolog programs and
 queries, optionally organised in notebooks. Especially cooperative
 development requires version management. The server-side storage service
 is implemented in Prolog and inspired by GIT. Each file is versioned

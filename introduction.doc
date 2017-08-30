@@ -25,7 +25,7 @@ example, comments starting with \verb$/**$ rather than plain \verb$/*$
 and process the result using a markup language such as HTML, \LaTeX{} or
 markdown. Well known examples of this class are JavaDoc and Doxygen.
 
-Notably for domains were programs are used to perform calculations on
+Notably for domains where programs are used to perform calculations on
 raw (experimental) data and produce derived data and charts, the
 traditional literate programming approach has been extended to include
 the result of the program such as a table or chart into the document.
@@ -34,8 +34,8 @@ A \LaTeX{} based approach for this is \TODO{find ref}.
 The first interactive version of this approach, called \jargon{notebooks
 interfaces}, \jargon{computational notebooks} or \jargon{data science
 notebooks} was introduced in 1988 as Mathematica 1.0 on the
-Macintosh\footnote{\url{https://en.wikipedia.org/wiki/Notebook_interface}}.
-Modern web technology such as HTML5, CSS3 and JavaScript allow for web
+Macintosh.\footnote{\url{https://en.wikipedia.org/wiki/Notebook_interface}}
+Modern web technologies such as HTML5, CSS3 and JavaScript allow for web
 based versions of notebooks, simplifying their deployment. A good
 example of this is Jupyter. The notebook interface paradigm is claimed
 \TODO{ref} to be particularly suited to improve reproducibility in e.g.,
