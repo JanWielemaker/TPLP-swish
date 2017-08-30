@@ -1,9 +1,13 @@
-\subsection{The cplint on SWISH system}
+
+\subsection{The \cplintonswish{} system}
 \label{sec:cplint}
 
-cplint on SWISH\footnote{http://cplint.ml.unife.it} \cite{RigBelLam16-SPE-IJ,AlbBelCot17-IA-IJ} is a web
+\cplintonswish{}\footnote{\url{http://cplint.ml.unife.it}}
+\cite{RigBelLam16-SPE-IJ,AlbBelCot17-IA-IJ} is a web
 application for experimenting with
-Probabilistic Logic Programming (PLP), an extension of logic programming for dealing
+Probabilistic Logic Programming (PLP)
+\cite{DBLP:journals/ml/RaedtK15},
+an extension of logic programming for dealing
 with uncertainty by means of probability theory.
 
 In particular, it handles languages that follow the distribution semantics
@@ -13,9 +17,11 @@ and the probability of a query is the sum
 of the probabilities of the instances where the query is true. This approach
 has recently gained prominence  and it is adopted by many languages such as
 Logic Programs with Annotated
-Disjuctions (LPADs) \cite{VenVer04-ICLP04-IC}, ProbLog \cite{DBLP:conf/ijcai/RaedtKT07}
-and PRISM \cite{DBLP:conf/iclp/Sato95ijar}. All these languages are handled
-by cplint on SWISH. They have the same expressive power, as there are
+Disjuctions (LPADs) \cite{VenVer04-ICLP04-IC},
+ProbLog \cite{DBLP:conf/ijcai/RaedtKT07}
+and PRISM \cite{DBLP:conf/iclp/Sato95ijar}.
+All these languages are handled
+by \cplintonswish{}. They have the same expressive power, as there are
 transformation of linear complexity among each other. All offer the possibility
 of expressing probabilistic choices: for example, LPADs allow disjunctions
 in the head of clauses where each disjunct is annotated with a probability, the
@@ -29,7 +35,7 @@ is not viable because there is an exponential number of them so smarter
 algorithms must be adopted. One of the most successful approaches is
 \jargon{knowledge compilation}, where the program is compiled into an
 intermediate language from which the computation of the probability is easy.
-cplint on SWISH includes the PITA algorithm \cite{RigSwi13-TPLP-IJ}
+\cplintonswish{} includes the PITA algorithm \cite{RigSwi13-TPLP-IJ}
 that compiles the program to a Binary Decision Diagram (BDD) exploiting the
 CUDD library\footnote{\url{http://vlsi.colorado.edu/~fabio/}} and computes the
 probability with a dynamic programming algorithm. However, inference is
@@ -43,18 +49,19 @@ In parameter learning, the user has a program for which he does not know
 the probabilistic parameters and wants to learn the parameters from data.
 In structure learning, the user wants to learn both the structure of the
 clauses and the parameters from data.
-In cplint on SWISH learning can be performed from data in the form of a
+In \cplintonswish{} learning can be performed from data in the form of a
 set of interpretations, each expressing a possible state of the world.
 One predicate is identified as target and true and false atoms for it in the
 interpretations are used as positive and negative examples respectively.
 Parameter learning needs an EM algorithm, as the model includes unobserved
-variables. EMBLEM \cite{BelRig13-IDA-IJ} is available in cplint on SWISH and
+variables. EMBLEM \cite{BelRig13-IDA-IJ} is available in \cplintonswish{} and
 uses a special dynamic programming algorithm operating on BDDs for implementing
 EM.
-For structure learning, cplint on SWISH includes SLIPCOVER
+For structure learning, \cplintonswish{} includes SLIPCOVER
 \cite{BelRig15-TPLP-IJ} that performs a beam search in the space of clauses
 and scores them using the log likelihood of the data after parameter learning
-by EMBLEM.
+by EMBLEM, and LEMUR \cite{DBLP:journals/ml/MauroBR15} that is similar
+to SLIPCOVER but uses Monte Carlo tree search.
 
 All the algorithms are available as modules to be loaded in a regular Prolog
 input file. Each modules offers directives to separate various sections of the
@@ -65,21 +72,27 @@ These directives are handled using term_expansion/2 and activate or deactivate
 other term_expansion/2 clauses that process the probabilistic clauses and
 transform them into Prolog clauses to be used by the  algorithms.
 
-All these modules were initially written for single user use and were using
-asserts in the algorithms modules. This does not work in the multi-user context
-of cplint on SWISH. Therefore the modules were modified so that the asserts
-are performed in the module that is created for the individual pengine.
+All these modules were adapted for the multi-user context
+of \cplintonswish{}. The modules use asserts to store information in the
+database: these asserts
+are now performed in the module that is created for the individual pengine.
 This module is obtained in term_expansion/2 clauses using the predicate
-prolog_load_context/2 that is available during compilation.
+prolog_load_context/2 that is available during compilation and that
+can return the module where the code is being loaded.
 This module name is
 temporarily stored in the algorithm module during compilation but is
 insulated from other input files using the thread_local/1 directive
-and is removed at the end of compilation.
+and is removed at the end of compilation. During execution of
+the algorithms all asserts are performed in the temporary pengine
+module and discarded at the end of the computation.
 
-Moreover, the information on the pengine module is necessary also to answer
-queries, so all inference and learning predicates are declared as meta.
+The name of the pengine module is necessary to execute the
+predicates that are offered by the inference and learning modules,
+so all inference and learning predicates are declared as meta_predicate/1,
+with one argument as module-sensitive. In this way the algorithms
+predicates can operate on the data stored in the pengine module.
 
-cplint on SWISH includes many examples from various domains:
+\cplintonswish{} includes many examples of inference from various domains:
 reasoning about actions,
 random walks,
 marketing,
@@ -92,29 +105,85 @@ medicine,
 games,
 social networks,
 filtering,
-Bayesian estimation,
+Bayesian estimation and
 regression.
+These examples show the various features of the inference modules:
+encoding Markov Logic Networks and stochastic logic programs,
+continuous random variables,
+particle filtering,
+likelihood weighting,
+Metropolis-Hastings sampling,
+rejection sampling,
+argument sampling,
+causal inference and
+computation of expectations.
 
-\begin{figure}
-    \includegraphics[width=\linewidth]{figs/cplint}
-    \caption{Screendump of cplint on SWISH with opened
-    Kalman filter example together with the results of
-    a MCINTYRE query graphed with R.}
-    \label{fig:cplint}
-\end{figure}
-
+\cplintonswish{} exploits the graphics capabilities of SWISH.
+For example, Figure \ref{fig:cplint-path} shows a program
+for the computation of the probability of the existence of a
+path in a probabilistic graph. The graphviz rendering library
+of SWISH is used to draw the probabilistic graph. Similarly,
+the same library is used to draw the BDD that is built by
+the PITA for answering a query.
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/cplint-path}
-    \caption{Screendump of cplint on SWISH with opened
-    Kalman filter example together with the results of
-    a MCINTYRE query graphed with R.}
+    \caption{Screendump of \cplintonswish{} with opened
+    probabilistic graph example.}
     \label{fig:cplint-path}
 \end{figure}
 
+\cplintonswish{} also uses the R for SWISH library
+that allows the use of R both for computation and for
+grphics. Figure \ref{fig:cplint-kalman} presents
+a one-dimensional Kalman filter example with a graph
+that shows how the probability density on the position
+of the target changes with time.
 \begin{figure}
-    \includegraphics[width=\linewidth]{figs/cplint-map}
-    \caption{Screendump of cplint on SWISH with opened
+    \includegraphics[width=\linewidth]{figs/cplint-kalman}
+    \caption{Screendump of \cplintonswish{} with opened
     Kalman filter example together with the results of
     a MCINTYRE query graphed with R.}
-    \label{fig:cplint-path}
+    \label{fig:cplint-kalman}
+\end{figure}
+
+SWISH also offers the possibility of adding rendering libraries.
+\cplintonswish{} for example adds a library for drawing
+two dimensional tile maps. Figure \ref{fig:cplint-map}
+shows an example for the random generation of two-dimensional
+tile maps for video games, together with a randomly generated
+map.
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/cplint-map}
+    \caption{Screendump of \cplintonswish{} with opened
+    tile map generation example.}
+    \label{fig:cplint-map}
+\end{figure}
+
+\cplintonswish{} also includes learning examples, both for
+parameter learning and for structure learning with SLIPCOVER
+and LEMUR: predicting  whether a machine should be fixed,
+classifying  pictures containing geometrical objects
+(Bongard problems),
+predicting the shopping behavior of people,
+learning the parameters of a hidden Markov model,
+predicting whether a molecule is an active mutagenic agent
+(the famous mutagenesis benchmark dataset),
+predicting the rating of courses of a university,
+and learning the probabilistic effects of actions in the Event Calculus.
+
+The learned programs are shown in the answer pane using a specific
+rendering library and can be applied to a testing set. From
+the results of testing it is often useful to
+draw the Received Operating Characteristic (ROC)
+and Precision Recall (PR) curves and computing
+the areas under these curves. \cplintonswish{} includes
+the auc\footnote{\url{http://www.swi-prolog.org/pack/list?p=auc}}
+SWI-Prolog pack for such purpose and can draw the curves using
+either R or C3.js: for example, Figure \ref{fig:cplint-auc}
+shows a ROC curve drawn with R.
+\begin{figure}
+    \includegraphics[width=\linewidth]{figs/cplint-auc}
+    \caption{Screendump of \cplintonswish{} with opened
+    ROC and PR curves example.}
+    \label{fig:cplint-auc}
 \end{figure}

@@ -1,3 +1,240 @@
+@String( ML_J = "Machine Learning")
+@article{DBLP:journals/ml/MauroBR15,
+  author    = {Nicola {Di Mauro} and
+               Elena Bellodi and
+               Fabrizio Riguzzi},
+  title     = {Bandit-based Monte-Carlo structure learning of probabilistic logic
+               programs},
+  journal   = ML_J,
+  volume    = {100},
+  number    = {1},
+  pages     = {127--156},
+  year      = {2015},
+  url       = {http://dx.doi.org/10.1007/s10994-015-5510-3},
+  doi       = {10.1007/s10994-015-5510-3},
+  timestamp = {Thu, 23 Jul 2015 10:14:56 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/ml/MauroBR15},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+@article{DBLP:journals/ml/RaedtK15,
+  author    = {De Raedt, Luc and
+               Angelika Kimmig},
+  title     = {Probabilistic (logic) programming concepts},
+  journal   = ML_J,
+  volume    = {100},
+  number    = {1},
+  pages     = {5--47},
+  year      = {2015},
+}
+@Article{Nitti2016,
+author="Nitti, Davide
+and De Laet, Tinne
+and De Raedt, Luc",
+title="Probabilistic logic programming for hybrid relational domains",
+journal=ML_J,
+year="2016",
+volume="103",
+number="3",
+pages="407--449",
+abstract="We introduce a probabilistic language and an efficient inference algorithm based on distributional clauses for static and dynamic inference in hybrid relational domains. Static inference is based on sampling, where the samples represent (partial) worlds (with discrete and continuous variables). Furthermore, we use backward reasoning to determine which facts should be included in the partial worlds. For filtering in dynamic models we combine the static inference algorithm with particle filters and guarantee that the previous partial samples can be safely forgotten, a condition that does not hold in most logical filtering frameworks. Experiments show that the proposed framework can outperform classic sampling methods for static and dynamic inference and that it is promising for robotics and vision applications. In addition, it provides the correct results in domains in which most probabilistic programming languages fail.",
+issn="1573-0565",
+doi="10.1007/s10994-016-5558-8",
+}
+@article{BelRig15-TPLP-IJ,
+  author = {Elena Bellodi and Fabrizio Riguzzi},
+  title = {Structure Learning of Probabilistic Logic Programs by Searching the Clause Space},
+  journal = {Theory and Practice of Logic Programming},
+  publisher = {Cambridge University Press},
+  copyright = {Cambridge University Press},
+  year = {2015},
+  volume = {15},
+  number = {2},
+  pages = {169-212},
+  pdf = {http://arxiv.org/abs/1309.2080},
+  url = {http://journals.cambridge.org/abstract_S1471068413000689},
+  doi = {10.1017/S1471068413000689},
+  keywords = {probabilistic inductive logic programming, statistical relational learning, structure learning, distribution semantics, logic programs with annotated disjunction, CP-logic},
+  abstract = {Learning probabilistic logic programming languages is receiving an increasing attention,
+and systems are available for learning the parameters (PRISM, LeProbLog, LFI-ProbLog
+and EMBLEM) or both structure and parameters (SEM-CP-logic and SLIPCASE) of these
+languages. In this paper we present the algorithm SLIPCOVER for "Structure LearnIng
+of Probabilistic logic programs by searChing OVER the clause space." It performs a beam
+search in the space of probabilistic clauses and a greedy search in the space of theories
+using the log likelihood of the data as the guiding heuristics. To estimate the log likelihood,
+SLIPCOVER performs Expectation Maximization with EMBLEM. The algorithm has been
+tested on five real world datasets and compared with SLIPCASE, SEM-CP-logic, Aleph and
+two algorithms for learning Markov Logic Networks (Learning using Structural Motifs (LSM)
+and ALEPH++ExactL1). SLIPCOVER achieves higher areas under the precision-recall and
+receiver operating characteristic curves in most cases.}
+}
+@article{BelRig13-IDA-IJ,
+  author = {Elena Bellodi and Fabrizio Riguzzi},
+  title = { Expectation {Maximization} over Binary Decision Diagrams for Probabilistic Logic Programs},
+  year = {2013},
+  volume = {17},
+  number = {2},
+  journal = {Intelligent Data Analysis},
+  publisher = {IOS Press},
+  copyright = {IOS Press},
+  pages = {343-363},
+  doi = {10.3233/IDA-130582},
+  url = {http://iospress.metapress.com/content/k1wu917722636526/?issue=2&genre=article&spage=343&issn=1088-467X&volume=17},
+  pdf = {http://ds.ing.unife.it/~friguzzi/Papers/BelRig13-IDA-IJ.pdf},
+  abstract = {Recently much work in Machine Learning has concentrated on using expressive representation languages that combine aspects of logic and probability. A whole field has emerged, called Statistical Relational Learning, rich of successful applications in a variety of domains.
+In this paper we present a Machine Learning technique targeted to Probabilistic Logic Programs, a family of formalisms where uncertainty is represented using Logic Programming tools.
+Among various proposals for Probabilistic Logic Programming, the one based on the distribution semantics is gaining popularity and is the basis for languages such as ICL, PRISM, ProbLog and Logic Programs with Annotated Disjunctions.
+This paper proposes a technique for learning parameters of these languages. Since their equivalent Bayesian networks contain hidden variables, an Expectation Maximization (EM) algorithm is adopted.
+In order to speed the computation up, expectations are computed directly on the Binary Decision Diagrams that are built for inference.
+The resulting system, called EMBLEM for ``EM over Bdds for probabilistic Logic programs Efficient Mining'', has been applied to a number of datasets and showed good performances both in terms of speed and memory usage. In particular its speed allows the execution of a high number of restarts, resulting in good  quality of the solutions.},
+  keywords = {Statistical Relational Learning, Probabilistic Inductive Logic Programming, Probabilistic Logic Programs, Logic Programs with Annotated Disjunctions, Expectation Maximization, Binary Decision Diagrams
+}
+}
+@article{Rig13-FI-IJ,
+  author = {Fabrizio Riguzzi},
+  title = {{MCINTYRE}: A {Monte Carlo} System for Probabilistic Logic Programming},
+  journal = {Fundamenta Informaticae},
+  abstract = {Probabilistic Logic Programming is receiving an increasing attention for its ability to model domains with complex and uncertain relations among entities.
+In this paper we concentrate on the problem of approximate inference in probabilistic logic programming languages based on the distribution semantics.
+A successful approximate approach is based on Monte Carlo sampling, that consists in verifying the truth of the query in a normal program sampled from the probabilistic program.
+The ProbLog system includes such an algorithm and so does the cplint suite.
+In this paper we propose an approach for Monte Carlo inference that is based on a program transformation that translates a probabilistic program into a normal program to which the query can be posed.  The current sample is stored in the internal database of the Yap Prolog engine.
+The resulting system, called MCINTYRE for Monte Carlo INference wiTh Yap REcord, is evaluated on various problems: biological networks, artificial datasets and a hidden Markov model.  MCINTYRE is compared with the Monte Carlo algorithms of ProbLog and  and with the  exact inference  of the PITA system. The results show  that MCINTYRE is faster than the other Monte Carlo systems.},
+  keywords = {Probabilistic Logic Programming,
+Monte Carlo Methods,
+Logic Programs with Annotated Disjunctions,
+ProbLog},
+  year = {2013},
+  publisher = {{IOS} Press},
+  pdf = {http://ds.ing.unife.it/~friguzzi/Papers/Rig13-FI-IJ.pdf},
+  doi = {10.3233/FI-2013-847},
+  volume = {124},
+  number = {4},
+  pages = {521-541},
+  copyright = {IOS Press}
+}
+@article{RigBelLam16-SPE-IJ,
+  author = {Fabrizio Riguzzi and Elena Bellodi and Evelina Lamma and
+  Riccardo Zese and Giuseppe Cota},
+  title = {Probabilistic Logic Programming on the Web},
+  journal = {Software: Practice and Experience},
+  publisher = {Wiley},
+  copyright = {Wiley},
+  year = {2016},
+  issn = {1097-024X},
+  url = {http://ds.ing.unife.it/~friguzzi/Papers/RigBelLam-SPE16.pdf},
+  abstract = {
+We present the web application "cplint on SWISH", that allows the user
+to write probabilistic logic programs and compute the probability of queries
+with just a web browser. The application is based on SWISH, a recently
+proposed web framework for logic programming. SWISH is based on various
+features and packages of SWI-Prolog, in particular its web server and
+its Pengine library, that allow to create remote Prolog engines and to pose
+queries to them. In order to develop the web application, we started from
+the PITA system which is included in cplint, a suite of programs for reasoning
+on Logic Programs with Annotated Disjunctions, by porting PITA
+to SWI-Prolog. Moreover, we modified the PITA library so that it can be
+executed in a multi-threading environment. Developing "cplint on SWISH"
+also required modification of the JavaScript SWISH code that creates and
+queries Pengines. "cplint on SWISH" includes a number of examples that
+cover a wide range of domains and provide interesting applications of Probabilistic
+Logic Programming (PLP). By providing a web interface to cplint
+we allow users to experiment with PLP without the need to install a system,
+a procedure which is often complex, error prone and limited mainly to the
+Linux platform. In this way, we aim to reach out to a wider audience and
+popularize PLP.},
+  keywords = { Logic Programming, Probabilistic Logic Programming,
+Distribution Semantics, Logic Programs with Annotated Disjunctions, Web
+Applications
+},
+  doi = {10.1002/spe.2386},
+  volume = {46},
+  number = {10},
+  pages = {1381-1396},
+  month = {October},
+  wos = {WOS:000383624900005},
+  scopus = {2-s2.0-84951829971}
+}
+@article{AlbBelCot17-IA-IJ,
+  author = {Marco Alberti and Elena Bellodi and Giuseppe Cota and
+  Fabrizio Riguzzi and Riccardo Zese},
+  title = {\texttt{cplint} on {SWISH}: Probabilistic Logical Inference with a Web Browser},
+  journal = {Intelligenza Artificiale},
+  publisher = {IOS Press},
+  copyright = {IOS Press},
+  year = {2017},
+  issn-print = {1724-8035},
+  issn-online = {2211-0097},
+  url = {http://ds.ing.unife.it/~friguzzi/Papers/AlbBelCot-IA17.pdf},
+  abstract = {
+\texttt{cplint} on SWISH is a web application that allows users to
+perform reasoning tasks on probabilistic logic programs.
+Both inference and learning systems can be performed: conditional probabilities with exact,
+rejection sampling and Metropolis-Hasting methods. Moreover, the system now allows hybrid programs,
+i.e., programs where some of the random variables are continuous. To perform inference on such programs likelihood weighting and particle filtering are used.
+\texttt{cplint} on SWISH is also able to sample goals' arguments and
+to graph the results. This paper reports on advances and new features
+of \texttt{cplint} on SWISH, including the capability of drawing the
+binary decision diagrams created during the inference processes.
+},
+  keywords = { Logic Programming, Probabilistic Logic Programming,
+Distribution Semantics, Logic Programs with Annotated Disjunctions, Web
+Applications
+},
+  volume = {11},
+  number = {1},
+  doi = {10.3233/IA-170106},
+  pages = {47--64},
+  wos = {WOS:000399736500004}
+}
+
+@inProceedings{VenVer04-ICLP04-IC,
+   author = {Vennekens, Joost
+and Verbaeten, Sofie
+and Bruynooghe, Maurice},
+   title = {{Logic Programs With Annotated Disjunctions}},
+   booktitle = {Logic Programming: 20th International Conference, ICLP 2004, Saint-Malo, France, September 6-10, 2004. Proceedings},
+   year = {2004},
+   series={LNCS},
+   volume={3132},
+   publisher={Springer Berlin Heidelberg},
+   editor="Demoen, Bart and Lifschitz, Vladimir",
+   address={Berlin Heidelberg, Germany},
+   pages={431--445},
+   isbn="978-3-540-27775-0",
+doi="10.1007/978-3-540-27775-0_30",
+}
+@String(IJCAI07_B = "20th International Joint Conference on Artificial Intelligence, Hyderabad, India (IJCAI-07)")
+@String( AAAIP_P = "AAAI Press")
+
+@inproceedings{DBLP:conf/ijcai/RaedtKT07,
+  author    = {{De Raedt}, Luc and
+               Angelika Kimmig and
+               Hannu Toivonen},
+  title     = {{ProbLog}: A Probabilistic {Prolog} and Its Application in Link Discovery},
+  booktitle = IJCAI07_B,
+  year      = {2007},
+  volume    = {7},
+  editor    = {Manuela M. Veloso},
+  publisher = AAAIP_P,
+  address = {Palo Alto, California USA},
+  pages     = {2462-2467},
+  ee        = {http://www.ijcai.org/papers07/Papers/IJCAI07-396.pdf},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+@inproceedings{DBLP:conf/iclp/Sato95ijar,
+  author    = {Taisuke Sato},
+  title     = {A Statistical Learning Method for Logic Programs with Distribution
+               Semantics},
+  booktitle = {12th International Conference on Logic Programming},
+  editor    = {Leon Sterling},
+  pages     = {715--729},
+  year      = {1995},
+  publisher = {{MIT} Press},
+  address= {Cambridge, MA},
+  isbn      = {0-262-69177-9},
+  timestamp = {Mon, 02 Dec 2013 17:40:45 +0100},
+
+}
 @incollection{RigBel14-URSWb-BC,
   year = {2014},
   isbn = {978-3-319-13412-3},

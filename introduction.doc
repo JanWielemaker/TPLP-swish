@@ -59,8 +59,8 @@ of a web server written in SWI-Prolog and a client application written
 in JavaScript. In this sense the design is similar to Jupyter.  SWISH
 however is designed as a multi-user notebook that supports Prolog's
 distinctive features and can be extended to facilitate extensions of
-the Prolog language such as CHR, cplint and LPS.
+the Prolog language such as CHR, \cplint{} and LPS.
 
 This article describes the architecture of SWISH, how it is being
 deployed to support Prolog education and how it has been extended to
-support cplint and LPS.
+support \cplint{} and LPS.
