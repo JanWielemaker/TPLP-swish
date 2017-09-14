@@ -1,2 +1,116 @@
 \subsection{The LPS language}
 \label{sec:lps}
+
+LPS (Logic-based Production Systems) is a logical reconstruction of the production system model of computing and human thinking. The logic of LPS is based on ALP (Abductive Logic Programming), which extends a logic program P with integrity constraints I, and undefined (abducible) predicates A. LPS uses a simplified, model-generation semantics for ALP, in which the task is to generate a model M that makes I true, where M is the intended model of P ${\cup}$ ${\Updelta}$, for some ${\Updelta}$ ${\subseteq}$ A.
+
+In LPS, the model M represents a history of state transitions, and is generated incrementally, starting from an initial partial history M$_{\mathrm{0}}$, containing an initial state, and defined by P. The logic program P also includes a history of external events, incrementally added to P in the order in which they occur. Each subsequent partial history M$_{\mathrm{i}}$ is obtained from the previous M$_{\mathrm{i-1 }}$by updating the latest state in M$_{\mathrm{i-1 }}$by means of any external events and actions that take place between M$_{\mathrm{i-1}}$ and M$_{\mathrm{i}}$. These updates are defined by causal laws in P, similar to those of the event calculus. 
+This is illustrated by the FirstSteps example in the SWISH implementation of LPS (see \figref{lpseditor})
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figs/lps-editor}
+\caption{LPS FirstSteps example. The SWISH editor was extended for LPS, showing its keywords in bold and events and fluents coloured differently.}
+\label{fig:lpseditor}
+\end{figure}
+
+The execution of the LPS program generates a timeline, see \figref{lpstimeline}.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figs/lps-timeline}
+\caption{LPS execution timeline.}
+\label{fig:lpstimeline}
+\end{figure}
+
+In the semantics, all the time-dependent facts (or fluents), events and actions belonging to a partial history M$_{\mathrm{i}}$ are time stamped, and M$_{\mathrm{i-1}}$ ${\subseteq}$ M$_{\mathrm{i}}$. The limit of this sequence of histories is the desired model M = M$_{\mathrm{0}}$ ${\cup}${\ldots} M$_{\mathrm{i-1}}$ ${\cup}$ M$_{\mathrm{i}}$ ${\cup}${\ldots}. In the light switch example, this sequence is:
+
+M$_{\mathrm{0}}$ = \{lightOff(0)\}
+
+M$_{\mathrm{1}}$ = \{lightOff(0), lightOff(1)\}
+
+M$_{\mathrm{2}}$ = \{lightOff(0), lightOff(1), switch(1,2), lightOn(2)\}
+
+M$_{\mathrm{3}}$ = \{lightOff(0), lightOff(1), switch(1,2), lightOn(2), lightOn(3)\}
+
+M$_{\mathrm{4}}$ = \{lightOff(0), lightOff(1), switch(1,2), lightOn(2), lightOn(3), switch(3,4), lightOff(4)\}
+
+M = M$_{\mathrm{4}}$ 
+
+The generation of the model M is only implicit. In the implementation, only the current state and most recent set of external events and actions are stored explicitly and without timestamps. Updates are performed destructively, without frame axioms, as in an imperative programming language. 
+
+The generation of actions in LPS is driven by \textit{reactive rules}, which are integrity constraints of the form \textit{antecedent ${\rightarrow}$ consequent}. Whenever an instance of an \textit{antecedent} of a rule becomes true in some history M$_{\mathrm{i-1}}$, the corresponding instance of the \textit{consequent} of the rule becomes a goal to be made true in some future M$_{\mathrm{j}}$, j ${\geq}$ i. 
+
+The quantification of variables in reactive rules is implicit. All variables, such as T1 in the \textit{antecedent} of a rule are implicitly universally quantified with scope the entire rule, but variables, such as T2, in the \textit{consequent} that are not in the \textit{antecedent} are implicitly existentially quantified with scope the \textit{consequent} of the rule. The ``times'' T1 and T2 are not real times, but numbers indicating a position in the sequence of states. The condition lightOff at T1 represents a fluent holding in state T1. The condition switch from T1 to T2 represents an action taking place between states T1 and T2.
+
+Clauses in P are used to define intensional predicates, as in Datalog, macroactions as in both Golog and Transaction Logic, and the post-conditions of actions and external events as in the Event Calculus, but without frame axioms. Preconditions are represented by integrity constraints in the form \textit{false conditions}. Clauses in P are used both to determine whether an \textit{antecedent} has become true and to make a \textit{consequent} true, in both cases by reducing goals to subgoals.
+
+In Prolog, a query is a one-off goal, and computation consists in determining whether the query holds or in finding instances of the query that hold. In LPS, the goals are reactive rules that must always be true. In LPS, a Prolog-like query becomes an external event, which triggers a reactive rule. The reactive rule processes the query and generates actions, returning any output. For example:
+
+ \textit{if query(Sender, Query) from T1 to T2, authorised(Sender, Query) at T2,}
+
+ \textit{ holds(Query) at T2}
+
+ \textit{ then send(Sender, Query, true) from T2 to T3.}
+
+The SWISH implementation of LSP was developed under an EPSRC grant administered by Imperial College, to provide an easy-to-use online tool for teaching logic and computing to secondary school students. SWISH was chosen because it was the only Prolog system that provided the web based interface we had identified as needed for the task. The ability to create interactive notebooks was not a feature that we had aimed to provide, but was an added bonus that we discovered as the project progressed.
+
+\subsubsection{Implementation}
+\label{sec:lpsImpl}
+
+LPS and its SWISH front-end are open source; source code and public online systems accessible from Imperial College London\footnote{\url{http://lps.doc.ic.ac.uk}}. 
+
+
+The LPS interpreter ran previously on XSB and (SWISH-less) SWI Prolog, as a Prolog top level goal pre-processing the LPS program into an intermediate file with Prolog facts, and then loading and using this to simulate the program over a finite amount of time.
+
+To make it run on SWISH, which essentially whips up a new dynamic module with the user program for every user query, the LPS pre-processor was simply embedded into term\_expansion/2: prior to actually loading the program and invoking the LPS interpreter, the program is pre-processed term by term. In addition, the interpreter had to be made thread-safe, by declaring relevant dynamic predicates with SWI's thread\_local directive.
+
+{\bf Error reporting and semantic colouring}
+
+LPS program pre-processing includes a number of checks, which may flag semantic errors, e.g. using an undeclared fluent literal:
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figs/lps-SemanticError}
+\caption{SWISH editor showing a LPS-specific error.}
+\label{fig:lpserror}
+\end{figure}
+
+During pre-processing LPS source positions are kept. When an error occurs, reporting is delegated to SWI Prolog's standard print\_message/2, passing it an error term with the position. 
+The SWISH machinery displays it (see \figref{lpserror}).
+
+LPS syntax is a superset of Prolog's, adding fluent and event/action literals as well as a few keywords; so naturally it was desired to colour these differently. By plugging into SWISH's generic syntactic colouring framework, all we had to do was to enhance the LPS pre-processor to generate also some ``colour token terms'', an ad hoc kind of Prolog ``type structure declarations'', annotating the source LPS terms{\ldots} and declare fluent and event classes in a CSS. 
+
+We also inherit SWISH's own Prolog cross referencing, which colours system predicates, undefined predicates etc. in LPS programs as well.
+
+{\bf Execution timelines}
+
+LPS executions are better understood with a timeline depicting fluent state changes and event occurrences, as shown in the lights example above. Each execution under SWISH originates a post mortem trace as Prolog facts, which is converted into a JSON representation, visualized by a Javascript module\footnote{\url{http://visjs.org/docs/timeline}}.  The timeline is integrated simply as a SWISH custom renderer.
+
+{\bf 2D animations}
+
+Timelines are useful but can be overwhelming. Since some LPS programs operate over fluents that are amenable to a 2D representation, the developer is able to optionally provide some custom ``display declarations'', 
+which cause SWISH to display the execution as a 2D animation specific for the program. 
+For example, our simulation\footnote{See \url{http://lcdemo.logicalcontracts.com/example/life.pl}} of the Game of Life states that live cell fluents should be displayed as green circles (see \figref{lpslife}):
+
+d(X-Y,[center:[XX,YY], radius:5, type:circle, fillColor:green]) :- 
+
+XX is X*10, YY is Y*10.
+
+\begin{figure}
+\includegraphics[]{figs/lps-Life}
+\caption{LPS 2D animation frame for the Game of Life.}
+\label{fig:lpslife}
+\end{figure}
+
+As for timelines, 2d animations are displayed via a SWISH custom renderer, developed using a 2D object library\footnote{\url{http://paperjs.org}}. 
+Another example\footnote{\url{http://lcdemo.logicalcontracts.com/example/bankTransfer.pl}} displays piles of money in a simple bank transfer simulation; 
+the video-like controls show the LPS simulation cycle of the current video frame (see \figref{lps2dworld}).
+
+\begin{figure}
+\includegraphics[]{figs/lps-2dworld}
+\caption{LPS 2D animation controls.}
+\label{fig:lps2dworld}
+\end{figure}
+
+{\bf Evaluation and future LPS work}
+
+The current system was developed within the CLOUT project referred above. It would simply be objectively impossible to develop it with our limited budget (about 4 person*months) without the SWISH and SWI Prolog infrastructures in place.
+
+More recently, a start-up company founded by the LPS team\footnote{\url{http://logicalcontracts.com}} has further enhanced it to allow execution of LPS programs in background, to act as web services to client applications, providing access to fluent state and accepting injection of events, and invoking REST actions in other systems. These features ended up having simple implementations, that basically delegate the heavy lifting to existing SWISH and SWI Prolog's HTTP libraries. 
