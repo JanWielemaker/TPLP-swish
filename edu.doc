@@ -1,12 +1,13 @@
 \section{Using SWISH in Prolog education}
 \label{sec:edu}
+\label{sec:lpn}
 
-The educational potential of SWISH was immediately obvious. First of all
-it provides a sufficiently rich Prolog environment for basic educational
+The educational potential of SWISH was immediately obvious. SWISH
+provides a sufficiently rich Prolog environment for basic educational
 needs without installing software. The relatively simple and modern web
-interface appears to be more appealing to students.  SWISH allows for
-students to save their assignment as anonymous program and send a link
-to their teacher.
+interface seems to be appealing to students. SWISH allows for students
+to save their assignment as anonymous program and send a link to their
+teacher.
 
 The next obvious application is to exploit the ability to embed SWISH
 using an \elem{iframe} element into existing online course material. The

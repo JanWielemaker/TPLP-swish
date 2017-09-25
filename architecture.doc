@@ -1,6 +1,8 @@
 \section{Architecture}
 \label{sec:arch}
 
+\todo{Add rendering section}
+
 SWISH consists of two parts. The \emph{client side}, running in a
 browser, is implemented as a series of jQuery plugins, using Bootstrap
 for styling and RequireJS\footnote{\url{http://requirejs.org/}} for
@@ -100,7 +102,7 @@ over 67 files.  Below we describe the key components:
 
     \item Notebook \textbf{markdown} cells are supported by a server-side
     markdown engine that is borrowed from PlDoc, the SWI-Prolog
-    documentation system \cite{pldoc}.
+    documentation system \cite{Wielemaker:2007c}.
 
     \item The \textbf{storage} component stores documents in a format
     that is largely compatible with the GIT SCM.  The main difference
@@ -301,60 +303,3 @@ these conditions:
     keep data in local dynamic predicates that remain invisible to
     non-authorised users.
 \end{itemize}
-
-
-%================================================================
-\subsection{Portability}
-\label{sec:portability}
-
-The SWISH client libraries are based on mature JavaScript libraries. The
-client runs in all modern major browsers with HTML5, CSS and JavaScript
-support. It is frequently tested on FireFox, Chrome, Safari and Internet
-Explorer~11.
-
-The server code is basically non-portable. Many of the required
-libraries and features are shared with at least one other Prolog
-implementation, but none is capable to support the full range. Below we
-summarise the main problems.
-
-\begin{itemize}
-    \item The scale of the involved Prolog libraries demands for
-    a closely compatible Prolog module system.  Probably only
-    SICStus and YAP can be used without significant rewrites.
-
-    \item The HTTP server libraries are heavily based on C~code
-    that interacts with the SWI-Prolog foreign language interface
-    to Prolog streams.  YAP has copied the low-level libraries and is
-    capable to run (an old version of) these libraries.
-
-    \item The Pengines library depends on the HTTP library and
-    the multi-thread interface.  The SWI-Prolog thread API is
-    also provided by YAP and XSB.
-
-    \item The sandbox library (\secref{sandbox}) assumes that
-    whitelisted predicates are indeed safe.  This requires robust
-    handling of invalid calls and resource overflows.  Few Prolog
-    systems can satisfy this requirement.  SICStus Prolog would
-    be a candidate, but SICStus does not support multi-threading.
-
-    \item The semantic syntax highlighting depends on detailed
-    source layout information provided by read_term/3.  SWI-Prolog's
-    support for term layout is an extended version of the Quintus
-    Prolog term layout functionality.
-
-    \item Significant parts of the code rely on SWI-Prolog version~7
-    extensions, notably the \jargon{dict} and \jargon{string} types
-    that facilitate a natural mapping between Prolog and JSON data.
-\end{itemize}
-
-From the above list it should be clear that a fully functional port of
-SWISH to another Prolog system is not immediately feasible. YAP probably
-comes closest but still requires a significant amount of work.
-
-There is a more realistic scenario though. In this setup, SWI-Prolog
-provides the web interface and most of the development tools and another
-language, not even necessarily Prolog, provides the query solving. The
-interface between the two can be based on interprocess communication or,
-especially if the target system is safe and capable of supporting
-threads, by linking the target system into the process and using the
-C~interface.

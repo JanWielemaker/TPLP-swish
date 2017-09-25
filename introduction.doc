@@ -41,17 +41,17 @@ example of this is Jupyter. The notebook interface paradigm is claimed
 \TODO{ref} to be particularly suited to improve reproducibility in e.g.,
 data science workflows and to provide interactive educational material.
 
-In this article we are interested in the educational opportunities
-provided by notebook interfaces and we concentrate on Prolog and Prolog
-based languages. Prolog has a number of distinctive features that are
-hard to support in systems that are designed for more widespread
-languages. First, the program-is-data feature, combined with the absence
-of keywords complicates syntax highlighting, completion and other user
-support found in modern editors and expected by todays users. Second,
-non-determinism allows generating multiple answers for one query, which
-requires a different query/answer interface. Third, a large subset of
-queries is side effect free. This simplifies concurrent usage through a
-web based interface.
+In this article we are notably interested in the educational
+opportunities provided by notebook interfaces and we concentrate on
+Prolog and Prolog based languages. Prolog has a number of distinctive
+features that are hard to support in systems that are designed for more
+widespread languages. First, the program-is-data feature, combined with
+the absence of keywords complicates syntax highlighting, completion and
+other user support found in modern editors and expected by todays users.
+Second, non-determinism allows generating multiple answers for one
+query, which requires a different query/answer interface. Third, a large
+subset of queries is side effect free. This simplifies concurrent usage
+through a web based interface.
 
 This article discusses SWISH, an acronym for \jargon{SWI}-Prolog for
 \jargon{SH}aring or \jargon{SWI}-Prolog \jargon{SH}ell. SWISH consists
@@ -63,4 +63,26 @@ the Prolog language such as CHR, \cplint{} and LPS.
 
 This article describes the architecture of SWISH, how it is being
 deployed to support Prolog education and how it has been extended to
-support \cplint{} and LPS.
+support \cplint{} and LPS.  The main contributions of this article are:
+
+\begin{itemize}
+    \item Provide a detailed description of a novel web-based Prolog
+    environment for data analysis and education.
+
+    \item Describe the potential of web-based Prolog.  Notably demonstrate
+    how SWISH can be used to provide tutorial environments for derived
+    languages.
+
+    \item Resolve technical challenges involved running a web based
+    IDE over low-bandwidth network with high latency.  This notably
+    poses challenges for server-assisted semantic syntax highlighting.
+\end{itemize}
+
+This article is organized as follows. After the introduction we provide
+an overview of SWISH in \secref{application}, followed by a description
+of the overall archirecture (\secref{arch} and details about some of its
+critical components. In \secref{edu} we elaborate on education support.
+\Secref{extending} discusses how SWISH can be used to provide a tutorial
+side for two Prolog derived languages. The evaluation
+(\secref{evaluation}) describes the impact, lessons learned and
+portability. We conclude with a discussion about future directions.
