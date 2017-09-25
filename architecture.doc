@@ -1,8 +1,6 @@
 \section{Architecture}
 \label{sec:arch}
 
-\todo{Add rendering section}
-
 SWISH consists of two parts. The \emph{client side}, running in a
 browser, is implemented as a series of jQuery plugins, using Bootstrap
 for styling and RequireJS\footnote{\url{http://requirejs.org/}} for
@@ -257,6 +255,44 @@ disposed of after the pengine terminates. The pengine may be asked
 questions through HTTP queries, similar to a traditional Prolog user
 interacting with Prolog running in a
 terminal.\footnote{\url{https://www.youtube.com/watch?v=G_eYTctGZw8}}
+
+%================================================================
+\subsection{Rendering answers using HTML5}
+\label{sec:rendering}
+
+The \jargon{rendering} infrastructure exploits one of the key benefits
+of using web technology, the ability to use arbitrary HTML, CSS,
+Javascript and SVG to visualise answers. \Figref{render} and
+\figref{lpstimeline} provide a few examples. A rendering \jargon{plugin}
+is a Prolog module that exports a DCG non-terminal term_rendering//3.
+This non-terminal is passed the term to be rendered, a list of
+\arg{Name}~=~\arg{Var} binding providing the names of variables and a
+list of options. If the renderer recognises a Prolog term it emits HTML
+tokens following the rules of the SWI-Prolog DCG based HTML generation
+\cite{DBLP:journals/tplp/WielemakerHM08}. The rendering plugin is
+registered using a directive register_renderer/2, which defines the name
+of the renderer and a short description. A rendering plugin is activated
+for a program using the directive below. The \arg{Options} term is
+optional. If provided it is passed to the third argument of
+term_rendering//3.
+
+\begin{code}
+:- use_rendering(Renderer, Options).
+\end{code}
+
+Each term is handed to all activated renderers and finally to the
+built-in generic term renderer that represents any term as writeq/1
+using nested \elem{span} elements. If one or more of the special purpose
+renderers succeed, the output of the first is displayed, together with a
+hover-menu that provides access to the other representations.
+
+Currently, rendering plugins are not executed inside the Pengine, but by
+the HTTP handler that returns a Pengine answer to the client. This is a
+consequence of the Pengine interface that will be addressed in future
+versions as it prevents the renderer from accessing global data,
+bypasses resource limitations imposed on the Pengine and prevents
+supporting rendering hooks as part of the user program.
+
 
 %================================================================
 \subsection{Sandboxing queries}
