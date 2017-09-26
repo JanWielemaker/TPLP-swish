@@ -105,24 +105,24 @@ transform them into Prolog clauses to be used by the  algorithms.
 The modules were adapted for the multi-user context
 of \cplintonswish{}. The modules use asserts to store information in the
 database: these asserts
-are now performed in the module that is created for the individual pengine.
+are now performed in the module that is created for the individual Pengine.
 This module is obtained in term_expansion/2 clauses using the predicate
 prolog_load_context/2 that is available during compilation and that
 can return the module where the code is being loaded.
-The pengine module name is
+The Pengine module name is
 temporarily stored in the algorithm module during compilation but is
 insulated from other input files using the thread_local/1 directive
 and is removed at the end of compilation.
 During execution of
-the algorithms all asserts are performed in the temporary pengine
+the algorithms all asserts are performed in the temporary Pengine
 module and discarded at the end of the computation.
 
-The name of the pengine module is necessary to execute the
+The name of the Pengine module is necessary to execute the
 predicates that are offered by the inference and learning modules,
 so all inference and learning predicates are declared as meta
 using the directive meta_predicate/1,
 with one argument indicated as module-sensitive. In this way the algorithm
-predicates can operate on the data stored in the pengine module.
+predicates can operate on the data stored in the Pengine module.
 
 \cplintonswish{} includes many examples of inference from various domains:
 reasoning about actions,
@@ -168,9 +168,9 @@ the PITA for answering a query.
 
 \cplintonswish{} also uses the R for SWISH library
 that allows the use of R both for computation and for
-grphics. The code for interfacing \cplint{} with R
+graphics. The code for interfacing \cplint{} with R
 is included in the \verb|cplint_r|\footnote{\url{http://www.swi-prolog.org/pack/list?p=cplint_r}}
-SWI-Prolog pack. Figure \ref{fig:cplint-kalman} presents
+SWI-Prolog pack. \Figref{cplint-kalman} presents
 a one-dimensional Kalman filter example with a graph
 that shows how the probability density on the position
 of the target changes with time.
@@ -182,9 +182,9 @@ of the target changes with time.
     \label{fig:cplint-kalman}
 \end{figure}
 
-SWISH also offers the possibility of adding rendering libraries.
-\cplintonswish{} for example adds a library for drawing
-two dimensional tile maps. Figure \ref{fig:cplint-map}
+SWISH also offers the possibility of adding rendering plugins.
+\cplintonswish{} for example adds a plugin for drawing
+two dimensional tile maps. \Figref{cplint-map}
 shows an example for the random generation of two-dimensional
 tile maps for video games, together with a randomly generated
 map.
