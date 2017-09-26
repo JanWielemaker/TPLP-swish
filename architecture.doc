@@ -25,7 +25,7 @@ file. Currently, \file{swish-min.js} is 1.1Mb (308Kb compressed) and
 \file{swish-min.css} 188Kb (53Kb compressed).
 
 \begin{itemize}
-    \item The \textbf{code editor} is used to edit programs, queries,
+    \item The \textbf{program editor} is used to edit programs, queries,
     HTML and Markdown.  It is based on CodeMirror and described in
     more detail in \secref{codemirror}.
 
@@ -71,9 +71,9 @@ file. Currently, \file{swish-min.js} is 1.1Mb (308Kb compressed) and
 \label{sec:server-components}
 
 The SWISH server is a monolithic web server written entirely in
-SWI-Prolog. The code heavily depends (see \secref{portability}) on the
-SWI-Prolog web libraries. The current 20K source lines are distributed
-over 67 files.  Below we describe the key components:
+SWI-Prolog. The code heavily depends on the SWI-Prolog web libraries
+(see \secref{portability}). The current 20K source lines are distributed
+over 67 files. Below we describe the key components:
 
 \begin{itemize}
     \item The client side code editor is supported by a \textbf{highlight server}
@@ -81,22 +81,20 @@ over 67 files.  Below we describe the key components:
     on cross-reference analysis. In addition, the \jargon{mode
     declarations} from the documentation, e.g.,
     \exam{thread_create(:Goal, -Id, +Options) is det} are compiled into
-    a JSON object to support  CodeMirror \jargon{template}
-    support.  See \secref{codemirror}.
+    a JSON object to support CodeMirror support to
+    insert \jargon{templates}. See \secref{codemirror}.
 
-    \item Running a query is managed by a \jargon{Pengine}.  The
+    \item Running a query is managed by a \\textbf{Pengine}.  The
     pengine library is part of SWI-Prolog
     \cite{DBLP:journals/tplp/LagerW14}.  \jargon{Sandboxing} queries
-    is one of the optional facilities of the Pengine service.  When
-    enforced, the user is limited to \jargon{whitelisted} predicates.
-    The default set of these ensure the user cannot permanently modify
-    the server and cannot access privacy sensitive information.
+    is one of the optional facilities of the Pengine service and is
+    discussed in \secref{sandbox}.
 
-    \item Query answers are processed by the \textbf{rendering service}.
-    The set of Prolog plugins recognises Prolog terms (like portray/1)
-    and emits an HTML node. This node in turn may include CSS, JavaScript
-    or SVG.  Providing additional rendering plugins is a common way to
-    customise SWISH.  See \secref{extending}.
+    \item Query answers are processed by the \textbf{rendering service}
+    that is described in \secref{rendering}. A rendering plugin
+    recognises a Prolog term (like portray/1) and emits an HTML node.
+    Adding rendering plugins is a common way to customise
+    SWISH. See \secref{extending}.
 
     \item Notebook \textbf{markdown} cells are supported by a server-side
     markdown engine that is borrowed from PlDoc, the SWI-Prolog
@@ -105,10 +103,7 @@ over 67 files.  Below we describe the key components:
     \item The \textbf{storage} component stores documents in a format
     that is largely compatible with the GIT SCM.  The main difference
     is that documents are treated individually and not organized in a
-    \jargon{tree}. Two versions of a document are linked by a
-    \jargon{commit}, represented as a SWI-Prolog \jargon{dict} object.
-    The same file store can be safely shared by multiple SWISH
-    instances.
+    \jargon{tree}. The storage component is discussed in \secref{gitty}.
 
     \item  \textbf{Authentication} and \textbf{authorization} can
     be used to provide optional or obligatory login using HTTP
@@ -126,15 +121,14 @@ over 67 files.  Below we describe the key components:
 
 
 %================================================================
-\subsection{The code editor}
+\subsection{The program editor}
 \label{sec:codemirror}
 
 A proper editor is the most important component of a usable programming
 environment. The editor must support the language, including syntax
 highlighting, auto indentation, code completion based on templates and
-already existing code and highlighting of errors and warning from the
-compiler.  The editor is used both for editing the source code and
-editing queries.
+already existing code, highlighting of errors and warning from the
+compiler and providing access to the documentation.
 
 Prolog is a difficult language to support in code editors due to the
 lack of reserved keywords, the fact that there is no distinction between
@@ -147,7 +141,7 @@ which can both be an arithmetic expression or a \jargon{pair} as used
 with, e.g., keysort/2. SWI-Prolog's native editor, called PceEmacs,
 solves this problem by closely integrating Prolog with the editor.
 While typing, the current term (clause or directive) is parsed and
-analysed in the context of the current file and the file's imports after
+analysed in the context of the current file and its imports after
 each keystroke. If the term has valid syntax, all tokens are coloured
 according to their syntactic category as well their semantic role in the
 program. For example, a call to a non-existing predicate is coloured
@@ -161,7 +155,7 @@ are not yet used by ProDT.}
 There are two dominant open source and actively maintained in-browser
 code editors available: ACE and CodeMirror. We opted for CodeMirror
 because its highlighting is based on raw JavaScript code rather than a
-regular expression based template language as used for ACE. The low
+regular expression based template language as used by ACE. The low
 level implementation allows for a novel highlighting implementation. The
 highlighter consists of a Prolog \emph{tokeniser} in JavaScript.
 Tokenizing Prolog is sufficient to colour comments, quoted material
@@ -182,7 +176,7 @@ as a list-of-lists, where each inner list represents the tokens for a
 source term (clause or directive). Grouping the tokens per source term
 allows for incremental update (not implemented) as well as
 re-synchronisation (see below). For example, a fragment of an enriched
-token list may look like this: [ \textit{functor, (undefined_goal)},
+token list may look like this: [ \textit{functor (undefined_goal)},
 \textit{variable (singleton)}, \ldots ]. The JavaScript tokeniser
 matches its tokens with this list. If the basic type (e.g., `functor' or
 `variable') matches, it uses the enrichment information (e.g.,
@@ -215,15 +209,29 @@ inserted as notes into the source code.
 \subsection{Document storage and version management}
 \label{sec:gitty}
 
-SWISH explicitly targets the cooperative development of Prolog programs and
-queries, optionally organised in notebooks. Especially cooperative
-development requires version management. The server-side storage service
-is implemented in Prolog and inspired by GIT. Each file is versioned
+SWISH explicitly targets the cooperative development of Prolog programs
+and queries, optionally organised in notebooks. Cooperative development
+requires version management. The storage service is implemented in
+Prolog and inspired by the GIT SCM. Unlike GIT, each file is versioned
 independently rather than maintaining the version of a hierarchy of
-files because files are generally independent. Files can be referenced
-by content using their GIT compatible SHA1 hash or by name. The name can
-be considered a version \jargon{head} and refers to the latest version
-with that name. The file save and load interface provides the following
+files because files are generally independent. The object representation
+of our storage system is binary compatible with GIT. The content of a
+\jargon{commit} object is a SWI-Prolog \jargon{dict} object linking the
+previous version to the current and providing metadata such as the time,
+author and commit message. Saving a new version adds a record to a
+journal file that provides the file name, its previous commit hash and
+the new commit hash. The file-based repository can be shared between
+multiple SWISH processes that may run on different nodes if a shared
+file system is used and the file system supports advisory locks for
+syncronising writes to the journal file. The journal file facilitates
+fast discovery of the available heads and fast tracking of changes by
+other SWISH instances. The content of the journal can be reconstructed
+from the commit objects. In \secref{discussion} we discuss the
+scalability of SWISH.
+
+Files can be referenced by content using their hash or by name. The name
+can be considered a version \jargon{head} and refers to the latest
+version with that name. The file interface provides the following
 operations:
 
 \begin{itemize}
@@ -231,16 +239,19 @@ operations:
           generated URL.
     \item Saving a file by name.
     \item Organise files using \jargon{tags}.
-    \item Saving a new version.  The interface shows the available
-          versions and the modifications (dif).
+    \item Saving a new version.
+    \item Merge changes if another user saved the same file.
+    \item Show the available versions and the modifications (dif).
     \item Forking a file under a new name.  The history remains
           linked to the original.  Both the old and new name act
 	  as a revision \jargon{head}.
 \end{itemize}
 
-Prolog source files can \jargon{include} other sources on the same
-server using \exam{:-~include(filename).}, including the latest
-version or \exam{:-~include(hash).} to include a specific version.
+Prolog source files can include other programs on the same server using
+\exam{:-~include(filename).}, including the latest version or
+\exam{:-~include(hash).} to include a specific version.
+
+
 
 %================================================================
 \subsection{Server side execution of the query}
@@ -249,15 +260,14 @@ version or \exam{:-~include(hash).} to include a specific version.
 Server-side execution of a query is supported by the Pengines
 \cite{DBLP:journals/tplp/LagerW14} library. The Pengines library allows
 for creating a Prolog engine represented by a Prolog thread. Optionally,
-the pengine is handed a Prolog program that is loaded into the pengine's
-workspace (program space). The workspace is a temporary module that is
-disposed of after the pengine terminates. The pengine may be asked
-questions through HTTP queries, similar to a traditional Prolog user
-interacting with Prolog running in a
+the Pengine is handed a Prolog program that is loaded into the Pengine's
+workspace, a Prolog module. The pengine may be asked questions through
+HTTP queries, similar to a traditional Prolog user interacting with
+Prolog running in a
 terminal.\footnote{\url{https://www.youtube.com/watch?v=G_eYTctGZw8}}
 
 %================================================================
-\subsection{Rendering answers using HTML5}
+\subsection{Rendering answers using HTML}
 \label{sec:rendering}
 
 The \jargon{rendering} infrastructure exploits one of the key benefits
@@ -266,9 +276,10 @@ Javascript and SVG to visualise answers. \Figref{render} and
 \figref{lpstimeline} provide a few examples. A rendering \jargon{plugin}
 is a Prolog module that exports a DCG non-terminal term_rendering//3.
 This non-terminal is passed the term to be rendered, a list of
-\arg{Name}~=~\arg{Var} binding providing the names of variables and a
-list of options. If the renderer recognises a Prolog term it emits HTML
-tokens following the rules of the SWI-Prolog DCG based HTML generation
+\arg{Name}~=~\arg{Var} bindings providing the names of variables as
+provided by read_term/2 and a list of options. If the renderer
+recognises a Prolog term it emits HTML tokens following the rules of the
+SWI-Prolog DCG based HTML generation
 \cite{DBLP:journals/tplp/WielemakerHM08}. The rendering plugin is
 registered using a directive register_renderer/2, which defines the name
 of the renderer and a short description. A rendering plugin is activated
@@ -280,7 +291,7 @@ term_rendering//3.
 :- use_rendering(Renderer, Options).
 \end{code}
 
-Each term is handed to all activated renderers and finally to the
+Each term is handed to all active renderers and finally to the
 built-in generic term renderer that represents any term as writeq/1
 using nested \elem{span} elements. If one or more of the special purpose
 renderers succeed, the output of the first is displayed, together with a
@@ -302,11 +313,12 @@ Prolog systems provide a programming environment that is capable of
 changing itself permanently and which exposes a potentially dangerous
 interface to the operating system. Both for education purposes and data
 analysis though, one can write meaningful programs without making
-permanent changes to the server or the server's filesystem. That is
-where the sandbox library comes in. The sandbox library is active while
-loading the source, where it refuses to add clauses to other modules
-than the pengine's workspace and where it only accepts a restricted set
-of \jargon{directives}, also aimed at keeping all changes local to the
+permanent changes to the server or the server's filesystem. Preventing
+the user from performing dangerous operations is the task of the sandbox
+library. The sandbox is active while loading a program into the
+Pengine's program space, where it refuses to add clauses to other
+modules and where it only accepts a restricted set of
+\jargon{directives}, also aimed at keeping all changes local to the
 workspace. Prior to execution, the sandbox unfolds the query and
 compares all reachable goals with a whitelist. It fails under one of
 these conditions:
