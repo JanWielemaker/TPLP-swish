@@ -8,8 +8,37 @@ extension of SWISH for experimenting with
 Probabilistic Logic Programming (PLP)
 \cite{DBLP:journals/ml/RaedtK15},
 the integration of logic programming with probability theory.
+\cplintonswish{} provides a web interface to the \cplint{} system.
 
-\cplintonswish{} handles languages that follow the distribution semantics
+PLP is still a relatively new field and its user base is still growing.
+One obstacle to its widespread adoption is the difficulty in the installation
+of the various PLP systems. For example, \cplint{} is a distributed as
+a SWI-Prolog
+pack but its installation
+requires the
+compilation of an external C library together with
+the CUDD library\footnote{\url{http://vlsi.colorado.edu/~fabio/}}
+for handling Binary Decision Diagrams (BDDs). The compilation
+is not automatic on some platforms, such as Windows, and requires
+manual intervention. This may represent a hurdle for some users.
+\cplintonswish{} allows users to try \cplint{} without installing
+anything on their machines, thus offering the opportunity to
+quickly get a feeling of what PLP is and what \cplint{}
+can do. Moreover, the possibility of saving, sharing and discussing
+programs also
+allows users to experiment with the system in a collaborative way,
+which is particularly important when learning a new technology.
+
+For example, \cplintonswish{} is used at the University of Ferrara
+for teaching Statistical Relational Artificial Intelligence:
+students are given assignment whose solution is a program in PLP
+that they can develop in \cplintonswish{} and
+submit by saving it in the system and sending the URL to
+the instructor.
+Therefore SWISH plays a very important role in the dissemination
+and promotion of PLP in general and \cplint{} in particular.
+
+\cplintonswish{} handles PLP languages that follow the distribution semantics
 \cite{DBLP:conf/iclp/Sato95ijar}: a probabilistic program defines a probability
 distribution over normal programs called \jargon{instances}
 and the probability of a query is the sum
@@ -36,8 +65,7 @@ algorithms must be adopted. One of the most successful approaches is
 \jargon{knowledge compilation}, where the program is compiled into an
 intermediate language from which the computation of the probability is easy.
 \cplintonswish{} includes the PITA algorithm \cite{RigSwi13-TPLP-IJ}
-that compiles the program to a Binary Decision Diagram (BDD) exploiting the
-CUDD library\footnote{\url{http://vlsi.colorado.edu/~fabio/}} and computes the
+that compiles the program to a BDD and computes the
 probability with a dynamic programming algorithm. However, exact inference is
 intractable in general so approximate algorithms have been developed.
 \cplintonswish{} includes MCINTYRE \cite{Rig13-FI-IJ} that uses a Monte Carlo
@@ -208,7 +236,6 @@ as a SWI-Prolog pack.
 
 \cplintonswish{} offers program and notebook profiles for each of
 the inference and learning algorithms containing code skeletons
-for using the algorithms.
-
-In the future we plan to modify the syntax highlighter of SWISH for correctly
-evidencing the probabilistic constructs.
+for using the algorithms. The syntax highlighter of SWISH was extended
+to correctly
+evidence the probabilistic constructs.

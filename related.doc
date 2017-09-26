@@ -72,3 +72,18 @@ provided in the URL that loads SWISH. This feature can be used to
 transform source code in a static HTML page into a SWISH instance using
 a simple JavaScript call. This is demonstrated in \secref{lpn}.
 
+\cplintonswish{} is a system for Probabilistic Logic Programming (PLP) that
+uses SWISH to provide a web interface to \cplint{}.
+A related PLP system is ProbLog2
+\cite{DBLP:journals/corr/abs-1304-6810}, which has also an online
+interface\footnote{\url{https://dtai.cs.kuleuven.be/problog/}} \cite{Dries2015}.  The
+main difference between the web interfaces of \cplintonswish{} and ProbLog2
+is that the first uses a Prolog-only software stack, whereas the latter
+ relies
+on several different technologies, including JavaScript, Python 3 and
+external knowledge compilers.
+In some cases ProbLog2 writes intermediate files to
+disk in order to call external programs such as DSHARP, while
+\cplintonswish{}  works
+in main memory only. ProbLog2 can also be used in Jupyter notebooks
+but, differently from SWISH, cannot interface to R.
