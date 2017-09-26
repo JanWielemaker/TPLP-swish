@@ -50,10 +50,8 @@ Clauses in P are used to define intensional predicates, as in Datalog, macroacti
 
 In Prolog, a query is a one-off goal, and computation consists in determining whether the query holds or in finding instances of the query that hold. In LPS, the goals are reactive rules that must always be true. In LPS, a Prolog-like query becomes an external event, which triggers a reactive rule. The reactive rule processes the query and generates actions, returning any output. For example:
 
- \textit{if query(Sender, Query) from T1 to T2, authorised(Sender, Query) at T2,}
-
- \textit{ holds(Query) at T2}
-
+ \textit{if query(Sender, Query) from T1 to T2, authorised(Sender, Query) at T2,}\\
+ \textit{ holds(Query) at T2}\\
  \textit{ then send(Sender, Query, true) from T2 to T3.}
 
 The SWISH implementation of LSP was developed under an EPSRC grant administered by Imperial College, to provide an easy-to-use online tool for teaching logic and computing to secondary school students. SWISH was chosen because it was the only Prolog system that provided the web based interface we had identified as needed for the task. The ability to create interactive notebooks was not a feature that we had aimed to provide, but was an added bonus that we discovered as the project progressed.
@@ -85,7 +83,7 @@ The LPS syntax is a superset of Prolog, adding fluent, event and action literals
 
 \paragraph{Execution timelines}
 
-LPS executions are better understood with a timeline depicting fluent state changes and event occurrences, as shown in the lights example in \figref{lpstimeline}. Each execution under SWISH originates a post mortem trace as Prolog facts, which is converted into a JSON representation, visualized by a Javascript module.\footnote{\url{http://visjs.org/docs/timeline}}  The timeline is integrated as a SWISH custom renderer.
+LPS executions are better understood with a timeline depicting fluent state changes and event occurrences, as shown in the lights example in \figref{lpstimeline}. Each execution under SWISH originates a post mortem trace as Prolog facts, which is converted into a JSON representation, visualised by a JavaScript module.\footnote{\url{http://visjs.org/docs/timeline}}  The timeline is integrated as a SWISH custom renderer.
 
 \paragraph{2D animations}
 

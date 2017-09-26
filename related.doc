@@ -15,7 +15,7 @@ environments for Prolog such as GNU-Emacs or
 ProDT,\footnote{\url{http://prodevtools.sourceforge.net/}} because
 web-based environments provide both new opportunities such as shared
 access and pose new challenges such as a more limited interface, limited
-bandwidth and high latencies. Instead, we discuss three applications
+bandwidth and high latency. Instead, we discuss three applications
 that have served as inspiration for SWISH:
 JSFiddle,\footnote{\url{https://jsfiddle.net/}}
 R-Studio\footnote{\url{http://www.rstudio.com/}} and Jupyter
@@ -24,7 +24,7 @@ Notebooks.\footnote{\url{http://jupyter.org}}
 \begin{itemize}
 \item
 As stated, the initial inspiration for SWISH was JSFiddle. JSFiddle is
-an environment for sharing browser technology (HTML, CSS, Javascript)
+an environment for sharing browser technology (HTML, CSS, JavaScript)
 and thus is naturally executed inside the user's browser. SWISH programs
 are executed on the server. For educational purposes, client side
 execution is probably feasible. For data analysis purposes remote
@@ -47,7 +47,7 @@ possible results as numbers, tables or charts.
 \end{itemize}
 
 SWISH embodies many of the ideas behind JSFiddle, R-Studio and Jupyter.
-SWISH provides shared anynymous access like JSFiddle. Both the R-Studio
+SWISH provides shared anonymous access like JSFiddle. Both the R-Studio
 `program and output window' and Jupyter notebook interfaces are
 available as they serve different user communities in our experience.
 
@@ -62,7 +62,7 @@ further shared analysis.
 
 Where Jupyter supports other languages using the notion of Jupyter
 \jargon{kernels}, such support is not provided by SWISH. We claim that
-Prolog is sufficiently different from the languages targetted by Jupyter
+Prolog is sufficiently different from the languages targeted by Jupyter
 to justify dedicated support. SWISH has little to offer to compete with
 Jupyter on the languages it supports properly though.
 

@@ -53,8 +53,8 @@ file. Currently, \file{swish-min.js} is 1.1Mb (308Kb compressed) and
 
     \item A \textbf{notebook} is a list of \jargon{cells} built from
     the above components.  The notebook itself allows for adding,
-    deleting and organizing cells and provides the necessary code
-    to serialize the content as an HTML document and import other
+    deleting and organising cells and provides the necessary code
+    to serialise the content as an HTML document and import other
     notebooks.
 
     \item  The social infrastructure makes other users aware that they
@@ -85,7 +85,7 @@ over 67 files. Below we describe the key components:
     insert \jargon{templates}. See \secref{codemirror}.
 
     \item Running a query is managed by a \\textbf{Pengine}.  The
-    pengine library is part of SWI-Prolog
+    Pengine library is part of SWI-Prolog
     \cite{DBLP:journals/tplp/LagerW14}.  \jargon{Sandboxing} queries
     is one of the optional facilities of the Pengine service and is
     discussed in \secref{sandbox}.
@@ -105,10 +105,10 @@ over 67 files. Below we describe the key components:
     is that documents are treated individually and not organized in a
     \jargon{tree}. The storage component is discussed in \secref{gitty}.
 
-    \item  \textbf{Authentication} and \textbf{authorization} can
+    \item  \textbf{Authentication} and \textbf{authorisation} can
     be used to provide optional or obligatory login using HTTP
     authentication (basic or digest) or the oauth2 federated login.
-    Authorized users can be assigned rights to documents.  Authorization
+    Authorised users can be assigned rights to documents.  Authorization
     can also be used to disable the \textbf{sandbox} restrictions on
     permitted queries for certain users.
 
@@ -158,7 +158,7 @@ because its highlighting is based on raw JavaScript code rather than a
 regular expression based template language as used by ACE. The low
 level implementation allows for a novel highlighting implementation. The
 highlighter consists of a Prolog \emph{tokeniser} in JavaScript.
-Tokenizing Prolog is sufficient to colour comments, quoted material
+Tokenising Prolog is sufficient to colour comments, quoted material
 (strings, quoted atoms), variables and constants (atoms and numbers).
 The tokeniser also keeps track of bracket nesting to support smart
 indentation. CodeMirror's token-based highlighting does \emph{not} allow
@@ -223,7 +223,7 @@ journal file that provides the file name, its previous commit hash and
 the new commit hash. The file-based repository can be shared between
 multiple SWISH processes that may run on different nodes if a shared
 file system is used and the file system supports advisory locks for
-syncronising writes to the journal file. The journal file facilitates
+synchronising writes to the journal file. The journal file facilitates
 fast discovery of the available heads and fast tracking of changes by
 other SWISH instances. The content of the journal can be reconstructed
 from the commit objects. In \secref{discussion} we discuss the
@@ -261,7 +261,7 @@ Server-side execution of a query is supported by the Pengines
 \cite{DBLP:journals/tplp/LagerW14} library. The Pengines library allows
 for creating a Prolog engine represented by a Prolog thread. Optionally,
 the Pengine is handed a Prolog program that is loaded into the Pengine's
-workspace, a Prolog module. The pengine may be asked questions through
+workspace, a Prolog module. The Pengine may be asked questions through
 HTTP queries, similar to a traditional Prolog user interacting with
 Prolog running in a
 terminal.\footnote{\url{https://www.youtube.com/watch?v=G_eYTctGZw8}}
@@ -313,7 +313,7 @@ Prolog systems provide a programming environment that is capable of
 changing itself permanently and which exposes a potentially dangerous
 interface to the operating system. Both for education purposes and data
 analysis though, one can write meaningful programs without making
-permanent changes to the server or the server's filesystem. Preventing
+permanent changes to the server or the server's file system. Preventing
 the user from performing dangerous operations is the task of the sandbox
 library. The sandbox is active while loading a program into the
 Pengine's program space, where it refuses to add clauses to other

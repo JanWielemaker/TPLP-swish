@@ -200,7 +200,7 @@ parameter learning and for structure learning with SLIPCOVER
 and LEMUR: predicting  whether a machine should be fixed,
 classifying  pictures containing geometrical objects
 (Bongard problems),
-predicting the shopping behavior of people,
+predicting the shopping behaviour of people,
 learning the parameters of a hidden Markov model,
 predicting whether a molecule is an active mutagenic agent
 (the famous mutagenesis benchmark dataset),

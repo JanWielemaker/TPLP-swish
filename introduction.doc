@@ -6,8 +6,9 @@ Interactive languages such as Prolog traditionally provide a
 output (answers) appear in textual form. The programming environment
 consists of this interactive session, a code editor and optionally tools
 for cross-referencing, profiling, testing, etc. These may be
-integrated in a single frontend called an \jargon{Integrated Development
-Environment} (IDE) such as, e.g., Emacs, Eclipse or Visual Studio.
+integrated in a single front end called an \jargon{Integrated
+Development Environment} (IDE) such as, e.g., Emacs, Eclipse or Visual
+Studio.
 
 \jargon{Literate programming} combines text about a program with the
 program itself in a single document. This field was pioneered by Knuth
@@ -80,10 +81,10 @@ support \cplint{} and LPS.  The main contributions of this article are:
     poses challenges for server-assisted semantic syntax highlighting.
 \end{itemize}
 
-This article is organized as follows. After this introduction we provide
+This article is organised as follows. After this introduction we provide
 an overview of the functionality provided by SWISH in
 \secref{application}, followed by a description of the overall
-archirecture (\secref{arch}) and details about some of its critical
+architecture (\secref{arch}) and details about some of its critical
 components. In \secref{edu} we elaborate on education support.
 \Secref{extending} discusses how SWISH can be used to provide a tutorial
 site for two Prolog derived languages. The evaluation
