@@ -10,7 +10,7 @@ the SWI-Prolog HTTP server libraries,
 \cite{DBLP:journals/tplp/WielemakerHM08} the Pengines library
 \cite{DBLP:journals/tplp/LagerW14} and the IDE support libraries that
 provide data for auto completion, documentation and highlighting. In the
-remainder of this section we first give a brief overview of the
+remainder of this section we give a brief overview of the
 available components, next we elaborate on some of these components and
 finally we discuss the portability of the design.
 

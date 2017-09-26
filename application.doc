@@ -7,12 +7,12 @@ SWISH as it is exposed to the user. SWISH has two `faces'. The first is
 an `IDE' face where it shows a program editor, a query editor and query
 answers (see \figref{swish}). This is the original interface and it is
 the most suitable for program development and testing. Programs created
-this way may be saved and reused in other programs or notebooks (see
-include/1 in \secref{gitty}). The second `face' is the notebook face
-described in \secref{notebook}. The notebook interface is particularly
-suitable for educational applications and recording data science
-workflows. First we describe the components of the IDE interface. The
-notebook interface reuses these components.
+this way may be saved and reused in other programs or notebooks using
+the standard Prolog include/1 directive (\secref{gitty}). The second
+`face' is the notebook interface described in \secref{notebook}. The
+notebook interface is particularly suitable for educational applications
+and recording data science workflows. First we describe the components
+of the IDE interface. The notebook interface reuses these components.
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/swish-screendump}
@@ -26,22 +26,41 @@ notebook interface reuses these components.
     \label{fig:swish}
 \end{figure}
 
-\noindent
 %================================================================
-\subsection{The query editor}
+\subsection{The program and query editor}
+\label{sec:programeditor}
 \label{sec:queryeditor}
 
+The \jargon{program editor} is an instance of
+CodeMirror\footnote{\url{https://codemirror.net/}} that we extended with
+a Prolog mode and encapsulated in a jQuery plugin. It notably provides
+semantic highlighting, template insertion and tooltips providing summary
+information from the manual (\secref{codemirror}) and access to the
+SWISH infrastructure for loading, storing and versioning of documents
+(\secref{gitty}).
+
 The \jargon{query editor} is based on the same jQuery plugin that
-realises the code editor and thus profits from  syntax highlighting,
-template insertion and hovering plugins. In addition, it provides three
-popup menus:
+realises the code editor and thus profits from syntax highlighting,
+template insertion and tooltips. In addition, it provides three popup
+menus:
 
 \begin{description}
     \item[Examples] This menu is filled from structured comments
-in the program.  It provides a menu entry for adding the current
-query to the program, either creating an \verb$/** <examples ... */$
-comment or extending an existing one.
+in the program.  Such a comment is formatted as below:
+
+\begin{code}
+/** <examples>
+?- reverse([a,b], L).
+?- reverse([a,b], [b,a]).
+*/
+\end{code}
+
+The examples menu provides a menu entry for adding the current query to
+the program, either by creating a structured comment block as above or
+adding the query to an existing block.
+
     \item[History] This menu provides access to previously executed queries.
+
     \item[Solutions]  This menu embeds an existing query in a meta-call to
 alter the result. Currently provided operations are \textit{Aggregate
 (count all)}, \textit{Order by}, \textit{Distinct}, \textit{Limit},
@@ -57,30 +76,29 @@ how the menu is used to count the solutions of a goal.
     \label{fig:aggregate}
 \end{figure}
 
-When the user is happy with the query, the \textsf{Run!} button can be
-used to execute the query. Pressing \textsf{Run!} collects the current
-program and query and creates a \jargon{runner} instance which is
-discussed in the next section.
+After the user entered a query, the \textsf{Run!} button can be used to
+execute the query. Pressing \textsf{Run!} collects the current program
+and query and creates a \jargon{runner} instance which is discussed in
+the next section.
 
 
 %================================================================
 \subsection{Running a query: runners in the answer pane}
 \label{sec:answerpane}
 
-The answer pane is a placeholder for \jargon{runners}, where each runner
-represents a query. The answer pane provides a menu for operations on
-all runners inside it. Provided actions are \textsf{Collapse all},
+The answer pane (top-right in \figref{swish}) is a placeholder for
+\jargon{runners}. The answer pane provides a menu for operations on all
+runners inside it. Provided actions are \textsf{Collapse all},
 \textsf{Expand all}, \textsf{Stop all} and \textsf{Clear}. Each runner
 in the answer pane represents a query. The query may be completed,
 running or waiting for user input. SWISH can manage multiple active
 queries at the same time, up to an application defined maximum
-(default~3). Once a runner has been created from the program and query
-its execution no longer depends on that and the user can thus adjust the
-program and/or query and create more runners while the query is
-executing.
+(default~3). Once a runner has been created its execution no longer
+depends on the program and query editors.  While the query is executing
+the user may prepare and start more queries.
 
-Each runner provides its own set of commands to control its query.
-During execution a runner provides an \textsf{Abort} button. After query
+Each runner provides its own set of controls to manage its query. During
+execution a runner provides an \textsf{Abort} button. After query
 evaluation completes with an answer and more answers may be available
 the runner allows for asking the next 1, 10, 100 or 1,000 results or to
 \textsf{Stop} the query. In addition, the runner shows a \jargon{text
@@ -88,19 +106,23 @@ input} field when the application wants to read input and may show
 debugger interaction buttons if the tracer is being used (see
 \secref{tracer}).
 
-A runner can render answers in two modes, the classical Prolog mode or
-as a table, similar to what many database interfaces provide. The
-`table' mode is particularly appealing for querying datasets (see
-\figref{aggregate}), while the former is more suitable for rendering
-small amounts of complex answers such as the chessboard position in
-\figref{swish}. By default, Prolog terms are rendered as structured HTML
-objects, where rendered text is the same as Prolog's writeq/1 predicate.
+A runner can render answers in two modes. The default classical Prolog
+renders the variable bindings as a sequence of \arg{Var}~=~\arg{Value}
+statements. The \jargon{tabled} displays a table where each column
+represents a variable. The `table' mode is particularly appealing for
+querying datasets (see \figref{aggregate}), while the former is more
+suitable for rendering small amounts of complex answers such as the
+chessboard position in \figref{swish}. By default, Prolog terms are
+rendered a nested \elem{span} element where the rendered text is the
+same as Prolog's writeq/1 predicate.  The functor of a compound term
+may be clicked to collapse the term to elipses (\ldots).
 
 The server can provide \jargon{rendering libraries} that render Prolog
 terms using dedicated HTML. In \figref{swish}, the `chess' renderer is
 loaded which translates a list of length $N$ holding integers in the
 range $1..N$ as a chessboard with queens. The interface allows for
 switching the selected rendering as illustrated in \figref{render}.
+The technical details are discussed in \secref{rendering}.
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/render}
@@ -135,14 +157,14 @@ for highlighting the unique feature of Prolog to re-evaluate a goal.
 \subsection{The notebook interface}
 \label{sec:notebook}
 
-A notebook is, inspired by IPython notebooks, a series of \jargon{cells}
-that is displayed in page order (top-down). The notebook menu allows for
-adding a cell, copy/paste a cell, deleting a cell and reordering cells.
-SWISH supports four cell types: \jargon{program}, \jargon{query},
+A notebook is, inspired by Jupyter notebooks, a series of \jargon{cells}
+that are displayed in page order (top-down). The notebook menu allows
+for adding a cell, copy/paste a cell, deleting a cell and reordering
+cells. SWISH supports four cell types: \jargon{program}, \jargon{query},
 \jargon{markdown} and \jargon{HTML}. The program and query cells are
-instances of the code editor and query editor. The markdown and HTML
+instances of the program and query editors. The markdown and HTML
 cells have two modes. By default they are displayed in rendered mode.
-Double clicking them transforms them into a codemirror editor instance
+Double clicking them transforms them into a CodeMirror editor instance
 with syntax highlighting support. Clicking outside the cell re-enables
 the rendered mode. Cells have a dynamic height that fits their content.
 Program cells have a maximum height and may be collapsed to a single
@@ -151,16 +173,16 @@ line.
 Notebooks have two types of programs, \jargon{local} and
 \jargon{global}. A query that is being executed creates a
 \jargon{runner} using the first local program cell above it and all
-global program cells. This is commonly used to realise variants of a
-query. In this scenario a global program cell is placed (usually) at the
-bottom of the notebook that provides the shared code for all queries.
-Just above the query cell we place a program cell that parameterizes the
-program. For example, suppose we have a database with different timed
-events and we wish to create charts of various of these events. In this
-case we write generic code use C3.js or R to vizualize time series in
-the global program. Next, we provide clauses to select events as
-parameterization to vizualize the events we are interested in as a local
-program. A simple generic query completes the picture.
+global program cells on the notebook. This is commonly used to realise
+variants of a query. In this scenario global program cells are placed
+(usually) at the bottom of the notebook and provide the shared code for
+all queries. Just above the query cell we place a program cell that
+parameterizes the program. For example, suppose we have a database with
+different timed events and we wish to create charts of various of these
+events. In this case we write generic code that uses C3.js or R to
+vizualize time series in the global program. Next, we provide clauses to
+select events as parameterization as a local program. A simple generic
+query completes the picture.
 
 Notebook queries have a settings button that determines whether the
 results are shown as a table or a traditional set of bindings, whether
@@ -194,7 +216,7 @@ can be preloaded with a \jargon{background program} (an invisible
 program that is sent along with each query), a \jargon{program} (that
 appears in the code editor), a \jargon{qeury} and \jargon{examples} that
 appear in the query editor. It can also be preloaded with a
-\jargon{notebook}.
+\jargon{notebook}.  See \secref{lpn}.
 
 Both a \jargon{runner} and the notebook query editor provide a menu to
 download the query answers as CSV. The subsequent dialogue allows for
@@ -205,9 +227,10 @@ these variables.
 The Pengine API has clients for Prolog, JavaScript, Java, Ruby and
 Erlang. This API can be used to execute queries against programs that
 are provided by the client or available as saved documents on the SWISH
-server. 
+server.
 
-The client for Prolog even offers a predicate for making non-deterministic RPC calls, like so:
+The client for Prolog offers a predicate for making non-deterministic
+RPC calls, for example:
 
 \begin{code}
 ?- use_module(library(pengines)).
@@ -219,5 +242,4 @@ X = c.
 ?-
 \end{code}
 
-SWISH instances can be configured to make SWI-Prolog's
-primitives to access data available to users.
+% end of file

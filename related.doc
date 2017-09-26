@@ -4,15 +4,15 @@
 We are not aware of other initiatives that aim at developing a rich
 web-based development environment for Prolog. There are web sites that
 allow for running Prolog online such as Tutorial
-Points\footnote{\url{https://www.tutorialspoint.com/execute_prolog_online.php}}.
+Points.\footnote{\url{https://www.tutorialspoint.com/execute_prolog_online.php}}
 These sites either run your Prolog program as a batch job or provide a
 classical terminal to access Prolog. None of the environments we visited
-provide features SWISH provides such as a notebook interface or
-rendering Prolog answers using web technology such as charts.
+provide SWISH features such as a notebook interface or rendering Prolog
+answers using web technology such as charts.
 
 We do not compare SWISH with traditional editor or GUI based development
 environments for Prolog such as GNU-Emacs or
-ProDT\footnote{\url{http://prodevtools.sourceforge.net/}}, because
+ProDT,\footnote{\url{http://prodevtools.sourceforge.net/}} because
 web-based environments provide both new opportunities such as shared
 access and pose new challenges such as a more limited interface, limited
 bandwidth and high latencies. Instead, we discuss three applications
@@ -23,9 +23,13 @@ Notebooks.\footnote{\url{http://jupyter.org}}
 
 \begin{itemize}
 \item
-As stated, the initial inspiration for SWISH was JSFiddle. Unlike
-JSFiddle though, Prolog is executed on the server rather than in the
-browser.
+As stated, the initial inspiration for SWISH was JSFiddle. JSFiddle is
+an environment for sharing browser technology (HTML, CSS, Javascript)
+and thus is naturally executed inside the user's browser. SWISH programs
+are executed on the server. For educational purposes, client side
+execution is probably feasible. For data analysis purposes remote
+execution allows users to control large Prolog jobs on big servers from
+their browser.
 
 \item
 R-Studio \cite{gandrud2013reproducible} is an interface to the R
@@ -53,14 +57,14 @@ be executed. SWISH can operate both as a public service granting access
 to non-intrusive queries that may be executed concurrently on shared
 (typically read-only) data and as an authenticated service to run
 arbitrary queries. The authenticated mode is often used for maintenance
-purposes such as updating the server software or loading data for shared
-analysis.
+purposes such as updating the server software or loading data for
+further shared analysis.
 
-Where Jupyter supports other languages using the notion of a Jupyter
-\jargon{kernel}, such support is not provided by SWISH. Where Prolog is
-sufficiently different from the languages targetted by Jupyter to
-justify dedicated support, SWISH has little to offer to compete with
-Jupyter on the languages it supports properly.
+Where Jupyter supports other languages using the notion of Jupyter
+\jargon{kernels}, such support is not provided by SWISH. We claim that
+Prolog is sufficiently different from the languages targetted by Jupyter
+to justify dedicated support. SWISH has little to offer to compete with
+Jupyter on the languages it supports properly though.
 
 Unlike the above, SWISH can easily be embedded into web pages using an
 \elem{iframe} element were the program, examples and queries can be

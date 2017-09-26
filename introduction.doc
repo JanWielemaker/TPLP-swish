@@ -28,8 +28,9 @@ markdown. Well known examples of this class are JavaDoc and Doxygen.
 Notably for domains where programs are used to perform calculations on
 raw (experimental) data and produce derived data and charts, the
 traditional literate programming approach has been extended to include
-the result of the program such as a table or chart into the document.
-A \LaTeX{} based approach for this is \TODO{find ref}.
+the result of the program such as a table or chart into the document. A
+\LaTeX{} based approach for this is provided by TikZ/PGF.
+\cite{griffin2010using}
 
 The first interactive version of this approach, called \jargon{notebooks
 interfaces}, \jargon{computational notebooks} or \jargon{data science
@@ -37,9 +38,10 @@ notebooks} was introduced in 1988 as Mathematica 1.0 on the
 Macintosh.\footnote{\url{https://en.wikipedia.org/wiki/Notebook_interface}}
 Modern web technologies such as HTML5, CSS3 and JavaScript allow for web
 based versions of notebooks, simplifying their deployment. A good
-example of this is Jupyter. The notebook interface paradigm is claimed
-\TODO{ref} to be particularly suited to improve reproducibility in e.g.,
-data science workflows and to provide interactive educational material.
+example of this is Jupyter. The notebook interface paradigm is
+claimed\footnote{\url{http://blog.stephenwolfram.com/2016/09/how-to-teach-computational-thinking/}}
+to be particularly suited to improve reproducibility in e.g., data
+science workflows and to provide interactive educational material.
 
 In this article we are notably interested in the educational
 opportunities provided by notebook interfaces and we concentrate on
@@ -47,11 +49,11 @@ Prolog and Prolog based languages. Prolog has a number of distinctive
 features that are hard to support in systems that are designed for more
 widespread languages. First, the program-is-data feature, combined with
 the absence of keywords complicates syntax highlighting, completion and
-other user support found in modern editors and expected by todays users.
-Second, non-determinism allows generating multiple answers for one
-query, which requires a different query/answer interface. Third, a large
-subset of queries is side effect free. This simplifies concurrent usage
-through a web based interface.
+explanations when \jargon{hovering} found in modern editors and expected
+by todays users. Second, non-determinism allows generating multiple
+answers for one query, which requires a different query/answer
+interface. Third, a large subset of queries is side effect free. This
+simplifies concurrent usage through a web based interface.
 
 This article discusses SWISH, an acronym for \jargon{SWI}-Prolog for
 \jargon{SH}aring or \jargon{SWI}-Prolog \jargon{SH}ell. SWISH consists
@@ -78,11 +80,12 @@ support \cplint{} and LPS.  The main contributions of this article are:
     poses challenges for server-assisted semantic syntax highlighting.
 \end{itemize}
 
-This article is organized as follows. After the introduction we provide
-an overview of SWISH in \secref{application}, followed by a description
-of the overall archirecture (\secref{arch} and details about some of its
-critical components. In \secref{edu} we elaborate on education support.
+This article is organized as follows. After this introduction we provide
+an overview of the functionality provided by SWISH in
+\secref{application}, followed by a description of the overall
+archirecture (\secref{arch}) and details about some of its critical
+components. In \secref{edu} we elaborate on education support.
 \Secref{extending} discusses how SWISH can be used to provide a tutorial
-side for two Prolog derived languages. The evaluation
+site for two Prolog derived languages. The evaluation
 (\secref{evaluation}) describes the impact, lessons learned and
 portability. We conclude with a discussion about future directions.
