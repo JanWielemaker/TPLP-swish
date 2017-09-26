@@ -3,22 +3,24 @@
 
 We have not performed any direct user evaluations with SWISH. Given the
 pace of development, different configurations and user communities it is
-not feasible to perform such a study. Below we summarise the impact of
-the system, lessons learned regarding using Prolog as server language
-and a browser for providing an IDE and discuss the portability.
+not feasible to perform such a study with limited resources. Below we
+summarise the impact of the system, lessons learned regarding using
+Prolog as server language and a browser for providing an IDE and discuss
+the portability.
 
 SWISH is (September 2017)
 online\footnote{\url{https://swish.swi-prolog.org}} for three years. It
-is extensively being used for Prolog education. Since its launch, three
-independently developed educational sites have been lanched: cplint and
-LPS (described in this article) and the book \textit{Simply Logical}.
-The main server now has 35,420 programs stored with 68,806 revisions.
-Usage is strongly correlated with academic holidays, ranging from 36,415
-queries per week (July~31 - August~6, 2017) to 125,946 (May~7-14, 2017).
-Google link search (\verb$link:swish.swi-prolog.org$) reports 8,490
-links to the main server. The popularity of the Github repository, 198
-stars and 48 forks compared to the main SWI-Prolog repository with 223
-stars and 53 forks is another indication of the impact.
+is extensively being used for Prolog education. Since its launch, at
+least three independently developed educational sites have been lanched:
+\cplint{} and LPS (described in this article) and the book
+\textit{Simply Logical} \cite{flach1994simply}. The main server now has
+35,420 programs stored with 68,806 revisions. Usage is strongly
+correlated with academic holidays, ranging from 36,415 queries per week
+(July~31 - August~6, 2017) to 125,946 (May~7-14, 2017). Google link
+search (\verb$link:swish.swi-prolog.org$) reports 8,490 links. The
+popularity of the Github repository, 198 stars and 48 forks compared to
+the main SWI-Prolog repository with 223 stars and 53 forks is another
+indication of the impact.
 
 The development of SWISH and its usage as a public service has proved to
 be an important demonstration of SWI-Prolog's ability for writing web
@@ -37,15 +39,13 @@ shown that SWI-Prolog based servers are capable of running arbitrary
 queries within bounded resources concurrently.
 
 The current browser infrastructure has proven to be sufficiently rich,
-portable and performant for developing a web IDE for Prolog. A web IDE
-provides shared access to the same server, which is both useful for
-education as for data analysis. Server-assisted semantic highlighting
-has proven to be feasible, but the mechanism is rather fragile because
-it requires synchronization of two independent highlighting processes,
-one at the client and one on the server. Besides providing shared
-access, a web frontend allows for transforming Prolog answers into rich
-graphical representations such as tables, charts, graphs or the LPS
-state transition diagrams.
+portable and performant for developing a web IDE for Prolog.
+Server-assisted semantic highlighting has proven to be feasible, but the
+mechanism is rather fragile because it requires synchronization of two
+independent highlighting processes, one at the client and one on the
+server. Besides providing shared access, a web frontend allows for
+transforming Prolog answers into rich graphical representations such as
+tables, charts, graphs or the LPS state transition diagrams.
 
 
 %================================================================
@@ -77,10 +77,10 @@ summarise the main problems.
     also provided by YAP and XSB.
 
     \item The sandbox library (\secref{sandbox}) assumes that
-    whitelisted predicates are indeed safe.  This requires robust
-    handling of invalid calls and resource overflows.  Few Prolog
-    systems can satisfy this requirement.  SICStus Prolog would
-    be a candidate, but SICStus does not support multi-threading.
+    whitelisted predicates both have no side effects and are robust
+    against stack overflows, handling cylic terms, etc. Few Prolog
+    systems can satisfy this requirement. SICStus Prolog would be a
+    candidate.
 
     \item The semantic syntax highlighting depends on detailed
     source layout information provided by read_term/3.  SWI-Prolog's
@@ -93,14 +93,13 @@ summarise the main problems.
 \end{itemize}
 
 From the above list it should be clear that a fully functional port of
-SWISH to another Prolog system is not immediately feasible.
-
-There is a more realistic scenario though. In this setup, SWI-Prolog
-provides the web interface and most of the development tools and another
-language, not even necessarily Prolog, provides the query solving. The
-interface between the two can be based on interprocess communication or,
-if the target system is safe and capable of supporting threads, by
-linking the target system into the process and using the C~interface.
+SWISH to another Prolog system is not immediately feasible.  There is a
+more realistic scenario though. In this setup, SWI-Prolog provides the
+web interface and most of the development tools and another language,
+not even necessarily Prolog, provides the query solving. The interface
+between the two can be based on interprocess communication or, if the
+target system is safe and capable of supporting threads, by linking the
+target system into the process and using the C~interface.
 
 Interprocess communication is already used in SWISH for embedding
 R.\footnote{\url{http://www.swi-prolog.org/pack/list?p=rserve_client}}
@@ -119,7 +118,7 @@ inside a Docker based OS sandbox.\footnote{\url{https://github.com/JanWielemaker
 
 This article presented SWISH, a web service that allows for running
 Prolog and domain specific languages (DSLs) defined on top of Prolog
-from your browser. SWISH provides an interface that is primarily
+from a browser. SWISH provides an interface that is primarily
 targetted at program development and testing as well as a
 \jargon{notebook} interface that is targets capturing workflows for data
 analysis and tutorials. The SWISH server is a monolitic SWI-Prolog
@@ -133,35 +132,34 @@ harms scalability. Some parts of the interaction with SWISH is by nature
 stateful, notably query execution and syntax highlighting which
 maintains a clone of the user's editor on the server. These can be
 distributed over a pool of servers using a proxy server with support for
-`sticky sessions', possibly refined to be sticky only for a particular
-source document or query. Other parts, such as serving the main page,
-icons, CSS, Javascript and manual pages can easily be offloaded from the
-Prolog server by using a caching reverse proxy or serving them from
-another server. Secondary servers may also be used to offload the chat
-and storage services. Extrapolating from resource usage on the main
-public server we estimate that SWISH can handle up to about 1,000
-concurrent users (dual Intel Xeon E5-2650) for typical educational
-usage.
+\jargon{sticky sessions}, possibly refined to be sticky only for a
+particular source document or query. Other parts, such as serving the
+main page, icons, CSS, Javascript and manual pages can easily be
+offloaded from the Prolog server by using a caching reverse proxy or
+serving them from another server. Secondary servers may also be used to
+offload the chat and storage services. Extrapolating from resource usage
+on the main public server we estimate that SWISH can handle up to about
+1,000 concurrent users (dual Intel Xeon E5-2650) for a typical
+educational workload.
 
 The current interface provides a better interaction with and more
 control for managing queries as well as small Prolog programs than the
 traditional Prolog command line and Prolog IDEs. This makes it suitable
 for education and data analysis. It is not yet suitable for the
 development of large applications. For these scenarios users expect
-support for modular program development, a rich editor and a good
+support for modular program development, a richer editor and a better
 debugger.
 
 The current system does not provide much support for animating progress,
 such as showing the moves while solving the towers of Hanoi puzzle. One
-option used in LPS is to generate a term that describes the entire
-animation and then use Javascript to reconstruct the animation in the
-user's browser. Future versions may exploit the Pengine \jargon{prompt}
-mechanism that is also used to implement read/1 to read from the browser
-to create interactive animations. Currently, SWISH rendering plugins are
-executed in the context of the HTTP reply mechanism rather than by the
-Pengine itself. This implies they are not sandboxed and must be provided
-by the SWISH installation and we cannot support user defined rendering
-plugins.
+option used in LPS is to generate the entire animation and then use
+Javascript to play the animation in the user's browser. Future versions
+may exploit the Pengine \jargon{prompt} mechanism that is also used to
+implement read/1 to read from the browser to create interactive
+animations. Currently, SWISH rendering plugins are executed in the
+context of the HTTP reply mechanism rather than by the Pengine itself.
+This implies they are not sandboxed and must be provided by the SWISH
+installation and we cannot support user defined rendering plugins.
 
 In data analysis scenarios some queries take long to execute and, if we
 provide a result, we would like to be able to reliably reproduce this
