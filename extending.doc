@@ -9,10 +9,24 @@ extension consists of:
 
 \begin{itemize}
     \item Provide syntax highlighting support for the target
-          language.
-    \item Provide additional \jargon{answer rendering} plugins.
-    \item Change the program or notebook \jargon{profiles}
-    \item Add notebooks and programs that provide examples.
+          language.  This implies extending multifile hooks
+	  provided by the SWI-Prolog library \texttt{prolog_colour.pl}.
+
+    \item Provide additional \jargon{answer rendering} plugins.  See
+          \secref{rendering}.
+
+    \item Change the program or notebook \jargon{profiles}.  Profiles
+	  are skeleton programs and notebooks that are stored in a
+	  directory \texttt{profiles}.  The user may create a new
+	  program or notebook from one of these profiles.
+
+    \item Add notebooks and programs that provide examples.  Examples
+          are added to the directory \texttt{examples}.  The directory
+	  contains a JSON index file that organises the content of the
+	  \textsf{Examples} menu in the SWISH navigation bar.  Typically
+	  only a few notebooks with a single markdown cell are added to
+	  the menu.  These notebooks provide an overview of the actual
+	  examples.
 \end{itemize}
 
 \input{cplint.tex}

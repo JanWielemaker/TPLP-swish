@@ -5,14 +5,13 @@
 The educational potential of SWISH was immediately obvious. SWISH
 provides a sufficiently rich Prolog environment for basic educational
 needs without installing software. The relatively simple and modern web
-interface seems to be appealing to students. SWISH allows for students
-to save their assignment as anonymous program and send a link to their
-teacher.
+interface is appealing to students. SWISH allows students to save their
+assignment as anonymous program and send a link to their teacher.
 
-The next obvious application is to exploit the ability to embed SWISH
+An obvious application is to exploit the ability to embed SWISH
 using an \elem{iframe} element into existing online course material. The
 first example was created by us for Learn Prolog
-Now!\footnote{\url{http://www.learnprolognow.org}}. Learn Prolog Now! is
+Now!\footnote{\url{http://www.learnprolognow.org}} Learn Prolog Now! is
 an online version of a Prolog book by Patrick Blackburn, Johan Bos, and
 Kristina Striegnitz \cite{blackburn2006learn}. We established a proof of
 concept that embeds SWISH in the online course
@@ -21,11 +20,12 @@ Prolog hosted \jargon{proxy} that fetches the pages from the main site
 and serves the enhanced pages to the user. The proxy identifies and
 classifies the code fragments in terms of `source code' `queries' and
 dependencies. Next, it adds a button to the source fragments that, when
-pressed, replaces the HTML \elem{pre} element with in \elem{iframe}
-running SWISH filled with the source while the example queries are added
-to the \textsf{Examples} menu (\figref{lpn}). The queries are executed
-by \url{http://swish.swi-prolog.org}. The proxy server served 304,205
-pages (user pages, excluding javascript, css and images) during 2016.
+pressed, replaces the HTML \elem{pre} element with an \elem{iframe}
+element running SWISH pre-loaded with the source while the example
+queries are added to the \textsf{Examples} menu (\figref{lpn}). The
+queries are executed by \url{http://swish.swi-prolog.org}. The proxy
+server served 304,205 pages (user pages, excluding javascript, css and
+images) during 2016.
 
 \begin{figure}
     \includegraphics[width=\linewidth]{figs/lpn}
