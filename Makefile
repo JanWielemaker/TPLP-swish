@@ -18,7 +18,7 @@ TEX=	introduction.tex architecture.tex edu.tex extending.tex \
 	$(DOC).tex
 
 
-SRC=$(TEX) swipl.sty *.bib $(DOC).bbl figs/*.png
+SRC=$(TEX) swipl.sty *.bib $(DOC).bbl figs/*.png figs/*.pdf
 SUP=tlp.cls acmtrans.bst README.TXT
 
 ################################################################
