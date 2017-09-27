@@ -214,7 +214,7 @@ accessing SWISH as a service and accessing other services from SWISH.
 particularly appealing for educational deployment. The SWISH interface
 can be preloaded with a \jargon{background program} (an invisible
 program that is sent along with each query), a \jargon{program} (that
-appears in the code editor), a \jargon{qeury} and \jargon{examples} that
+appears in the code editor), a \jargon{query} and \jargon{examples} that
 appear in the query editor. It can also be preloaded with a
 \jargon{notebook}.  See \secref{lpn}.
 
