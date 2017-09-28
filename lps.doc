@@ -1,11 +1,12 @@
 \subsection{The LPS language}
 \label{sec:lps}
 
-LPS (Logic-based Production Systems) is a logical reconstruction of the production system model of computing and human thinking. The logic of LPS is based on ALP (Abductive Logic Programming), which extends a logic program P with integrity constraints I, and undefined (abducible) predicates A. LPS uses a simplified, model-generation semantics for ALP, in which the task is to generate a model M that makes I true, where M is the intended model of P ${\cup}$ ${\Updelta}$, for some ${\Updelta}$ ${\subseteq}$ A.
+LPS (Logic-based Production Systems) is a computational framework based on a logical reconstruction of the production system model of computing and human thinking. The logic of LPS is based on Abductive Logic Programming (ALP), which extends a logic program P with integrity constraints I, and undefined (abducible) predicates A. LPS uses a simplified, model-generation semantics for ALP, in which the task is to generate a model M that makes I true, where M is a canonical model defined by P ${\cup}$ ${\Updelta}$, for some ${\Updelta}$ ${\subseteq}$ A.
 
 In LPS, the model M represents a history of state transitions, and is generated incrementally, starting from an initial partial history M$_{\mathrm{0}}$, containing an initial state, and defined by P. The logic program P also includes a history of external events, incrementally added to P in the order in which they occur. Each subsequent partial history M$_{\mathrm{i}}$ is obtained from the previous M$_{\mathrm{i-1 }}$by updating the latest state in M$_{\mathrm{i-1 }}$by means of any external events and actions that take place between M$_{\mathrm{i-1}}$ and M$_{\mathrm{i}}$. These updates are defined by causal laws in P, similar to those of the event calculus.
-This is illustrated by the FirstSteps example in the SWISH implementation of LPS (see \figref{lpseditor})
-The execution of the LPS program generates a timeline, see \figref{lpstimeline}.
+
+This is illustrated by the FirstSteps simple example in the SWISH implementation of LPS (see \figref{lpseditor}). It contains no reactive rules, constraints, or actions. Lines 1, 3 and 4 are declarations. Line 1 specifies how long the program should run (for 4 cycles). Line 3 declares the types of fluents, and line 4 declares the types of external events. The logic program P consists of a description of the initial state on line 6 and the causal laws on lines 11-14.  Lines 8 and 9 represent observations of external events, which take place at different times, but are included here for simplicity. 
+The execution of the program generates a timeline, see \figref{lpstimeline}.
 
 \begin{figure}
 \includegraphics[width=\linewidth]{figs/lps-editor}
@@ -19,7 +20,7 @@ The execution of the LPS program generates a timeline, see \figref{lpstimeline}.
 \label{fig:lpstimeline}
 \end{figure}
 
-All the time-dependent facts (or fluents), events and actions belonging to a partial history M$_{\mathrm{i}}$ are time stamped, and M$_{\mathrm{i-1}}$ ${\subseteq}$ M$_{\mathrm{i}}$. The limit of this sequence of histories is the desired model M = M$_{\mathrm{0}}$ ${\cup}${\ldots} M$_{\mathrm{i-1}}$ ${\cup}$ M$_{\mathrm{i}}$ ${\cup}${\ldots}. In the light switch example, this sequence is:
+In the model-theoretic semantics, all the (time-dependent) facts (or fluents), events and actions belonging to a partial history M$_{\mathrm{i}}$ are time stamped, and M$_{\mathrm{i-1}}$ ${\subseteq}$ M$_{\mathrm{i}}$. The limit of this sequence of histories is the desired model M = M$_{\mathrm{0}}$ ${\cup}${\ldots} M$_{\mathrm{i-1}}$ ${\cup}$ M$_{\mathrm{i}}$ ${\cup}${\ldots}. In the light switch example, this sequence is:
 
 \begin{quote}\footnotesize
 M$_{\mathrm{0}}$ = \{lightOff(0)\}
@@ -40,21 +41,25 @@ M$_{\mathrm{4}}$ = \{lightOff(0), lightOff(1), switch(1,2), lightOn(2), lightOn(
 M~~= M$_{\mathrm{4}}$
 \end{quote}
 
-The generation of the model M is only implicit. In the implementation, only the current state and most recent set of external events and actions are stored explicitly and without timestamps. Updates are performed destructively, without frame axioms, as in an imperative programming language.
 
-The generation of actions in LPS is driven by \textit{reactive rules}, which are integrity constraints of the form \textit{antecedent ${\rightarrow}$ consequent}. Whenever an instance of an \textit{antecedent} of a rule becomes true in some history M$_{\mathrm{i-1}}$, the corresponding instance of the \textit{consequent} of the rule becomes a goal to be made true in some future \mbox{M$_{\mathrm{j}}$, j ${\geq}$ i}.
+Because there are no reactive rules and constraints in this example, the model M trivially makes the rules and constraints true. 
+
+
+The generation of actions in LPS is driven by reactive rules \textit{antecedent ${\rightarrow}$ consequent}. Whenever an instance of an \textit{antecedent} of a rule becomes true in some history M$_{\mathrm{i-1}}$, the corresponding instance of the \textit{consequent} of the rule becomes a goal to be made true in some future \mbox{M$_{\mathrm{j}}$, j ${\geq}$ i}. 
+
 
 The quantification of variables in reactive rules is implicit. All variables, such as T1 in the \textit{antecedent} of a rule are implicitly universally quantified with scope the entire rule, but variables, such as T2, in the \textit{consequent} that are not in the \textit{antecedent} are implicitly existentially quantified with scope the \textit{consequent} of the rule. The ``times'' T1 and T2 are not real times, but numbers indicating a position in the sequence of states. The condition lightOff at T1 represents a fluent holding in state T1. The condition switch from T1 to T2 represents an action taking place between states T1 and T2.
 
-Clauses in P are used to define intensional predicates, as in Datalog, macroactions as in both Golog and Transaction Logic, and the post-conditions of actions and external events as in the Event Calculus, but without frame axioms. Preconditions are represented by integrity constraints in the form \textit{false conditions}. Clauses in P are used both to determine whether an \textit{antecedent} has become true and to make a \textit{consequent} true, in both cases by reducing goals to subgoals.
 
-In Prolog, a query is a one-off goal, and computation consists in determining whether the query holds or in finding instances of the query that hold. In LPS, the goals are reactive rules that must always be true. In LPS, a Prolog-like query becomes an external event, which triggers a reactive rule. The reactive rule processes the query and generates actions, returning any output. For example:
+In Prolog, a query is a one-off goal, and computation consists in determining whether the query holds or in finding instances of the query that hold. In LPS, reactive rules are goals that must always be true. In LPS, a Prolog-like query becomes an external event, which triggers a reactive rule. The reactive rule processes the query and generates actions, returning any output. 
+
+For example:
 
  \textit{if query(Sender, Query) from T1 to T2, authorised(Sender, Query) at T2,}\\
  \textit{ holds(Query) at T2}\\
  \textit{ then send(Sender, Query, true) from T2 to T3.}
 
-The SWISH implementation of LSP was developed under an EPSRC grant administered by Imperial College, to provide an easy-to-use online tool for teaching logic and computing to secondary school students. SWISH was chosen because it was the only Prolog system that provided the web based interface we had identified as needed for the task. The ability to create interactive notebooks was not a feature that we had aimed to provide, but was an added bonus that we discovered as the project progressed.
+The SWISH implementation of LPS was developed under an EPSRC grant administered by Imperial College, to provide an easy-to-use online tool for teaching logic and computing to secondary school students. SWISH was chosen because it was the only Prolog system that provided the web based interface we had identified as needed for the task. The ability to create interactive notebooks was not a feature that we had aimed to provide, but was an added bonus that we discovered as the project progressed.
 
 \subsubsection{Implementation}
 \label{sec:lpsImpl}
