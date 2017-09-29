@@ -54,7 +54,7 @@ In Prolog, a query is a one-off goal, and computation consists in determining wh
  \textit{ holds(Query) at T2}\\
  \textit{ then send(Sender, Query, true) from T2 to T3.}
 
-The SWISH implementation of LSP was developed under an EPSRC grant administered by Imperial College, to provide an easy-to-use online tool for teaching logic and computing to secondary school students. SWISH was chosen because it was the only Prolog system that provided the web based interface we had identified as needed for the task. The ability to create interactive notebooks was not a feature that we had aimed to provide, but was an added bonus that we discovered as the project progressed.
+The SWISH implementation of LPS was developed under an EPSRC grant administered by Imperial College, to provide an easy-to-use online tool for teaching logic and computing to secondary school students. SWISH was chosen because it was the only Prolog system that provided the web based interface we had identified as needed for the task. The ability to create interactive notebooks was not a feature that we had aimed to provide, but was an added bonus that we discovered as the project progressed.
 
 \subsubsection{Implementation}
 \label{sec:lpsImpl}
