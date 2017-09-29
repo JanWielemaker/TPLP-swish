@@ -1,8 +1,8 @@
-% "ACM Transactions" BibTeX style, acmtrans.bst 
+% "ACM Transactions" BibTeX style, acmtrans.bst
 %  for BibTeX version 0.99c, LaTeX version 3.141
 %  Revised 28-MARCH-1996
 %  Revised 30-JUNE-1995
-%  Revised 15-JAN-1996 
+%  Revised 15-JAN-1996
 %  $Header: acmtrans.bst,v 1.2 96/01/17 09:05:38 boyland Exp $
 %
 % Hacked by John T. Boyland at University of California, Berkeley
@@ -142,8 +142,8 @@ ENTRY
     author
     booktitle
     chapter
-    city	% jtb: added
-    date	% jtb: added
+    city % jtb: added
+    date % jtb: added
     edition
     editor
     howpublished
@@ -508,8 +508,8 @@ FUNCTION {format.editors.fml}
     { "" }
     { editor format.names.fml
       editor num.names$ #1 >
-    { ", Eds." * }	% jtb: removed parentheses
-    { ", Ed." * }	% jtb: removed parentheses
+    { ", Eds." * } % jtb: removed parentheses
+    { ", Ed." * } % jtb: removed parentheses
       if$
     }
   if$
@@ -523,8 +523,8 @@ FUNCTION {format.editors}
     { "" }
     { editor format.names
       editor num.names$ #1 >
-    { ", Eds." * }	% jtb: removed parentheses
-    { ", Ed." * }	% jtb: removed parentheses
+    { ", Eds." * } % jtb: removed parentheses
+    { ", Ed." * } % jtb: removed parentheses
       if$
     }
   if$
@@ -693,8 +693,8 @@ FUNCTION {format.pages}
 { pages empty$
   { "" }
   { pages multi.page.check
-	{ pages n.dashify } % gnp - removed () % jtb: removed pp.
-	{ pages }
+ { pages n.dashify } % gnp - removed () % jtb: removed pp.
+ { pages }
     if$
   }
   if$
@@ -726,8 +726,8 @@ FUNCTION {format.jour.vol}
         "~" * number * * }
       if$
      month empty$
-     {} 
-     {" (" * month * ")" *} 
+     {}
+     {" (" * month * ")" *}
      if$
     }
   if$
@@ -779,7 +779,7 @@ FUNCTION {format.in.ed.booktitle}
   { "" }
   { editor empty$
     { "In " format.emphasize.booktitle * }
-		% jtb: swapped editor location
+  % jtb: swapped editor location
     { "In " format.emphasize.booktitle * ", " * format.editors.fml * }
     if$
   }
@@ -787,7 +787,7 @@ FUNCTION {format.in.ed.booktitle}
 }
 
 FUNCTION {format.thesis.type}
-{ type empty$ 
+{ type empty$
     'skip$
 %   {pop$
    {{ "" }
@@ -815,11 +815,11 @@ FUNCTION {format.crossref.editor}
 { editor #1 "{vv~}{ll}" format.name$
   editor num.names$ duplicate$
   #2 >
-    { pop$ " et~al\mbox{.}" * }		% jrh: avoid spacing problems
+    { pop$ " et~al\mbox{.}" * }  % jrh: avoid spacing problems
     { #2 <
     'skip$
     { editor #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
-        { " et~al\mbox{.}" * }		% jrh: avoid spacing problems
+        { " et~al\mbox{.}" * }  % jrh: avoid spacing problems
         { " and " * editor #2 "{vv~}{ll}" format.name$ * }
       if$
     }
@@ -878,24 +878,24 @@ FUNCTION {format.lab.names}
 { 's :=
   s num.names$ 'numnames :=
   numnames #2 >    % change number to number of others allowed before
-		   % forcing "et al".
+     % forcing "et al".
     { s #1 "{vv~}{ll}" format.name$ " et~al\mbox{.}" * } % jrh: \mbox{} added
     {
       numnames #1 - 'namesleft :=
       #2 'nameptr :=
       s #1 "{vv~}{ll}" format.name$
-	{ namesleft #0 > }
-	{ nameptr numnames =
-	    { s nameptr "{ff }{vv }{ll}{ jj}" format.name$ "others" =
-		{ " et~al\mbox{.}" * }		% jrh: avoid spacing problems
-		{ " and " * s nameptr "{vv~}{ll}" format.name$ * }
-	      if$
-	    }
-	    { ", " * s nameptr "{vv~}{ll}" format.name$ * }
-	  if$
-	  nameptr #1 + 'nameptr :=
-	  namesleft #1 - 'namesleft :=
-	}
+ { namesleft #0 > }
+ { nameptr numnames =
+     { s nameptr "{ff }{vv }{ll}{ jj}" format.name$ "others" =
+  { " et~al\mbox{.}" * }  % jrh: avoid spacing problems
+  { " and " * s nameptr "{vv~}{ll}" format.name$ * }
+       if$
+     }
+     { ", " * s nameptr "{vv~}{ll}" format.name$ * }
+   if$
+   nameptr #1 + 'nameptr :=
+   namesleft #1 - 'namesleft :=
+ }
       while$
     }
   if$
@@ -931,12 +931,12 @@ FUNCTION {author.key.organization.label}
 %
 { author empty$
     { organization empty$
-	{ key empty$
-	    { "no key, author or organization in " cite$ * warning$
+ { key empty$
+     { "no key, author or organization in " cite$ * warning$
               cite$ #1 #3 substring$ }
-	    'key
-	  if$
-	}
+     'key
+   if$
+ }
         { organization }
       if$
     }
@@ -950,12 +950,12 @@ FUNCTION {editor.key.organization.label}
 %
 { editor empty$
     { organization empty$
-	{ key empty$
-	    { "no key, editor or organization in " cite$ * warning$
+ { key empty$
+     { "no key, editor or organization in " cite$ * warning$
               cite$ #1 #3 substring$ }
-	    'key
-	  if$
-	}
+     'key
+   if$
+ }
         { organization }
       if$
     }
@@ -992,12 +992,12 @@ FUNCTION {calc.label}
   or
     'author.editor.key.label
     { type$ "proceedings" =
-	'editor.key.organization.label
-	{ type$ "manual" =
-	    'author.key.organization.label
-	    'author.key.label
-	  if$
-	}
+ 'editor.key.organization.label
+ { type$ "manual" =
+     'author.key.organization.label
+     'author.key.label
+   if$
+ }
       if$
     }
   if$
@@ -1068,12 +1068,12 @@ FUNCTION {book}
 { output.bibitem
   author empty$
     { format.editors
-	  "author and editor" output.check }
+   "author and editor" output.check }
     { format.authors
-	  output.nonnull
+   output.nonnull
       crossref missing$
-    	{ "author and editor" editor either.or.check }
-    	'skip$
+     { "author and editor" editor either.or.check }
+     'skip$
       if$
     }
   if$
@@ -1082,13 +1082,13 @@ FUNCTION {book}
   format.btitle
   "title" output.check
   crossref missing$
-    { new.sentence		% jtb: start a new sentence for series/volume
+    { new.sentence  % jtb: start a new sentence for series/volume
       format.bvolume output
       new.block
       format.number.series output
       new.sentence
       publisher "publisher" output.check
-      address "address" output.check	% jtb: require address
+      address "address" output.check % jtb: require address
     }
     { new.block
       format.book.crossref output.nonnull
@@ -1133,15 +1133,15 @@ FUNCTION {inbook}
   format.btitle
   "title" output.check
   crossref missing$
-    { new.sentence		% jtb: start a new sentence for series/volume
+    { new.sentence  % jtb: start a new sentence for series/volume
       format.bvolume output
       new.block
       format.number.series output
       new.sentence
       publisher "publisher" output.check
-      address "address" output.check	% jtb: require address
+      address "address" output.check % jtb: require address
       format.chapter.pages
-      "chapter and pages" output.check	% jtb: moved from before publisher
+      "chapter and pages" output.check % jtb: moved from before publisher
     }
     { format.chapter.pages "chapter and pages" output.check
       new.block
@@ -1166,18 +1166,18 @@ FUNCTION {incollection}
   crossref missing$
   { format.in.ed.booktitle
     "booktitle" output.check
-    new.sentence		% jtb: start a new sentence for series/volume
+    new.sentence  % jtb: start a new sentence for series/volume
     format.bvolume output
     format.number.series output
     new.sentence
     publisher "publisher" output.check
-    address "address" output.check	% jtb: require address
+    address "address" output.check % jtb: require address
     format.chapter.pages output % gnp - was special.output.nonnull
 %                                 left out comma before page numbers
-				% jtb: moved from before publisher
+    % jtb: moved from before publisher
   }
   { format.incoll.inproc.crossref
-	output.nonnull
+ output.nonnull
     format.chapter.pages output
   }
   if$
@@ -1197,17 +1197,17 @@ FUNCTION {inproceedings}
   "title" output.check
   new.block
   crossref missing$
-    { journal missing$		% jtb: proceedings appearing in journals
+    { journal missing$  % jtb: proceedings appearing in journals
       { format.in.emphasize.booktitle format.city "booktitle" output.check
         format.editors.fml output
-        new.sentence		% jtb: start a new sentence for series/volume
+        new.sentence  % jtb: start a new sentence for series/volume
         format.bvolume output
         format.number.series output
         new.sentence
         organization output
         publisher "publisher" output.check % jtb: require publisher (?)
-        address "address" output.check	% jtb: require address
-        format.pages output	% jtb: moved from before publisher
+        address "address" output.check % jtb: require address
+        format.pages output % jtb: moved from before publisher
        }
        % jtb: new:
        { format.in.booktitle format.city "booktitle" output.check
@@ -1293,7 +1293,7 @@ FUNCTION {phdthesis}
   new.block
   format.title
   "title" output.check
-  new.block  
+  new.block
   format.thesis.type "Ph.D. thesis" output.nonnull
   school "school" output.check
   address output
@@ -1313,7 +1313,7 @@ FUNCTION {proceedings}
 %                                        editor or organization
   output.year.check                    % added (newapa)
   new.block
-  format.btitle format.city "title" output.check	% jtb: added city
+  format.btitle format.city "title" output.check % jtb: added city
   new.sentence
   format.bvolume output
   format.number.series output
@@ -1337,11 +1337,11 @@ FUNCTION {techreport}
   format.title
   "title" output.check
   new.block
-  format.tr.number output		% jtb: moved month ...
+  format.tr.number output  % jtb: moved month ...
   institution "institution" output.check
   address output
   new.sentence
-  month output				% jtb: ... to here (no parens)
+  month output    % jtb: ... to here (no parens)
   new.block
   note output
   fin.entry
@@ -1367,9 +1367,9 @@ MACRO {jan} {"Jan."}
 
 MACRO {feb} {"Feb."}
 
-MACRO {mar} {"Mar."}		% jtb: corrected: was "March"
+MACRO {mar} {"Mar."}  % jtb: corrected: was "March"
 
-MACRO {apr} {"Apr."}		% jtb: corrected: was "April"
+MACRO {apr} {"Apr."}  % jtb: corrected: was "April"
 
 MACRO {may} {"May"}
 
@@ -1460,8 +1460,8 @@ MACRO {mor} {"Math. Oper. Res."}
 
 MACRO {mscs} {"Math. Struct. Comput. Sci."}
 
-MACRO {mst} {"Math. Syst. Theor."}	% jtb: was Math. Syst. Theory
-				% jtb: (if you ask me, I prefer the old way)
+MACRO {mst} {"Math. Syst. Theor."} % jtb: was Math. Syst. Theory
+    % jtb: (if you ask me, I prefer the old way)
 MACRO {ngc} {"New Gen. Comput."}
 
 MACRO {scp} {"Sci. Comput. Program."}
@@ -1484,7 +1484,7 @@ MACRO {toplas} {"ACM Trans. Program. Lang. Syst."}
 
 MACRO {tocl} {"ACM Trans. On Comp. Logic"}
 
-MACRO {tcs} {"Theor. Comput. Sci."}	% jtb: was Theor. Comp. Sci.
+MACRO {tcs} {"Theor. Comput. Sci."} % jtb: was Theor. Comp. Sci.
 
 MACRO {tr} {"Tech. Rep."}
 
@@ -1591,14 +1591,14 @@ FUNCTION {author.organization.sort}
 %
 { author empty$
     { organization empty$
-	{ key empty$
-	    { "to sort, need author, organization, or key in " cite$ * warning$
-	      ""
-	    }
-	    { key sortify }
-	  if$
-	}
-	{ organization sortify }
+ { key empty$
+     { "to sort, need author, organization, or key in " cite$ * warning$
+       ""
+     }
+     { key sortify }
+   if$
+ }
+ { organization sortify }
       if$
     }
     { author sort.format.names }
@@ -1612,14 +1612,14 @@ FUNCTION {editor.organization.sort}
 %
 { editor empty$
     { organization empty$
-	{ key empty$
-	    { "to sort, need editor, organization, or key in " cite$ * warning$
-	      ""
-	    }
-	    { key sortify }
-	  if$
-	}
-	{ organization sortify }
+ { key empty$
+     { "to sort, need editor, organization, or key in " cite$ * warning$
+       ""
+     }
+     { key sortify }
+   if$
+ }
+ { organization sortify }
       if$
     }
     { editor sort.format.names }
@@ -1642,12 +1642,12 @@ FUNCTION {presort}
   or
     'author.editor.sort
     { type$ "proceedings" =
-	'editor.organization.sort
-	{ type$ "manual" =
-	    'author.organization.sort
-	    'author.sort
-	  if$
-	}
+ 'editor.organization.sort
+ { type$ "manual" =
+     'author.organization.sort
+     'author.sort
+   if$
+ }
       if$
     }
   if$
