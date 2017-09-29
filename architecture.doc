@@ -84,7 +84,7 @@ over 67 files. Below we describe the key components:
     a JSON object to support CodeMirror support to
     insert \jargon{templates}. See \secref{codemirror}.
 
-    \item Running a query is managed by a \\textbf{Pengine}.  The
+    \item Running a query is managed by a \textbf{Pengine}.  The
     Pengine library is part of SWI-Prolog
     \cite{DBLP:journals/tplp/LagerW14}.  \jargon{Sandboxing} queries
     is one of the optional facilities of the Pengine service and is
