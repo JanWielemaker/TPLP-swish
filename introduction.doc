@@ -22,7 +22,7 @@ such as class names or function names and \jargon{structured comments}.
 The structured comments use the comment syntax of the target language,
 avoiding the need for \program{tangle} to extract the program from the
 document. A \program{weave} like program is used to recognise, for
-example, comments starting with \verb$/**$ rather than plain \verb$/*$
+example, comments starting with ``\verb$/**$'' rather than plain ``\verb$/*$''
 and process the result using a markup language such as HTML, \LaTeX{} or
 markdown. Well known examples of this class are JavaDoc and Doxygen.
 
