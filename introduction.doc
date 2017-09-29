@@ -33,7 +33,7 @@ the result of the program such as a table or chart into the document. A
 \LaTeX{} based approach for this is provided by TikZ/PGF.
 \cite{griffin2010using}
 
-The first interactive version of this approach, called \jargon{notebooks
+The first interactive version of this approach, called \jargon{notebook
 interfaces}, \jargon{computational notebooks} or \jargon{data science
 notebooks} was introduced in 1988 as Mathematica 1.0 on the
 Macintosh.\footnote{\url{https://en.wikipedia.org/wiki/Notebook_interface}}
