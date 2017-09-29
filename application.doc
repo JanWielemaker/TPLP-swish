@@ -113,9 +113,9 @@ represents a variable. The `table' mode is particularly appealing for
 querying datasets (see \figref{aggregate}), while the former is more
 suitable for rendering small amounts of complex answers such as the
 chessboard position in \figref{swish}. By default, Prolog terms are
-rendered a nested \elem{span} element where the rendered text is the
+rendered as a nested \elem{span} element where the rendered text is the
 same as Prolog's writeq/1 predicate.  The functor of a compound term
-may be clicked to collapse the term to elipses (\ldots).
+may be clicked to collapse the term to ellipses (\ldots).
 
 The server can provide \jargon{rendering libraries} that render Prolog
 terms using dedicated HTML. In \figref{swish}, the `chess' renderer is
