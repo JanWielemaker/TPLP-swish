@@ -1,0 +1,62 @@
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: wp_and_pw.aux
+The style file: acmtrans.bst
+Database file #1: pengines.bib
+Warning--I'm ignoring DBLP:journals/corr/abs-1808-08042's extra "pages" field
+--line 536 of file pengines.bib
+A bad cross reference---entry "DBLP:conf/hopl/Armstrong07"
+refers to entry "DBLP:conf/hopl/2007", which doesn't exist
+A bad cross reference---entry "DBLP:conf/ijcai/HewittBS73"
+refers to entry "DBLP:conf/ijcai/1973", which doesn't exist
+Warning--I didn't find a database entry for "??"
+Warning--I didn't find a database entry for "DBLP:conf/hopl/2007"
+Warning--I didn't find a database entry for "DBLP:conf/ijcai/1973"
+Warning--empty publisher in DBLP:conf/hopl/Armstrong07
+Warning--empty address in DBLP:conf/hopl/Armstrong07
+Warning--empty publisher in DBLP:conf/ijcai/HewittBS73
+Warning--empty address in DBLP:conf/ijcai/HewittBS73
+Warning--can't use both author and editor fields in Horrocks2005
+Warning--can't use both author and editor fields in Kifer2005
+You've used 12 entries,
+            2969 wiz_defined-function locations,
+            791 strings with 8202 characters,
+and the built_in function-call counts, 9440 in all, are:
+= -- 763
+> -- 754
+< -- 0
++ -- 236
+- -- 248
+* -- 938
+:= -- 1691
+add.period$ -- 49
+call.type$ -- 12
+change.case$ -- 93
+chr.to.int$ -- 12
+cite$ -- 18
+duplicate$ -- 253
+empty$ -- 537
+format.name$ -- 288
+if$ -- 1772
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 16
+newline$ -- 62
+num.names$ -- 120
+pop$ -- 93
+preamble$ -- 1
+purify$ -- 168
+quote$ -- 0
+skip$ -- 253
+stack$ -- 0
+substring$ -- 477
+swap$ -- 92
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 210
+warning$ -- 6
+while$ -- 114
+width$ -- 0
+write$ -- 163
+(There were 2 error messages)
